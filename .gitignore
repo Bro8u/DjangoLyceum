@@ -1,0 +1,21 @@
+# Виртуальное окружение
+venv/
+
+# Файлы Python
+__pycache__/
+*.py[cod]
+
+# Логи
+*.log
+*.pot
+
+# IDE
+.idea/
+.vscode/
+
+# Статические файлы
+staticfiles/
+
+# Миграции базы данных
+*.sqlite3
+db.sqlite3
