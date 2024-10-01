@@ -3,9 +3,14 @@ stages:
 
 flake8_lint:
   stage: lint
-  image: registry.gitlab.com/pipeline-components/flake8:latest
+  image: python:3.10  # Используем Python-образ
+  before_script:
+    - pip install flake8 flake8-naming flake8-quotes flake8-import-order flake8-bugbear black
   script:
-    - flake8 --exclude=venv,.gitignore,readme.md, .
+    # flake8: проверка на стиль, порядок импортов и кавычки
+    - flake8 . --max-line-length=79 --exclude=venv,.gitignore,README.md --import-order-style=pep8 --quote-types=single
+    # black: проверка на соответствие формату без изменения файлов
+    - black --check .
   only:
     - merge_requests
     - main
