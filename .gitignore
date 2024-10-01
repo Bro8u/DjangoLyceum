@@ -20,5 +20,3 @@ staticfiles/
 # Миграции базы данных
 *.sqlite3
 db.sqlite3
-
-.flake8
