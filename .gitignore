@@ -1,5 +1,6 @@
 # Виртуальное окружение
 venv/
+.env/
 
 # Файлы Python
 __pycache__/
@@ -19,3 +20,5 @@ staticfiles/
 # Миграции базы данных
 *.sqlite3
 db.sqlite3
+
+.flake8

@@ -44,24 +44,12 @@
     pip install -r requirements.txt
     ```
 
-5. Выполните миграции базы данных:
-
-    ```bash
-    python manage.py migrate
-    ```
-
-6. Создайте суперпользователя для админ-панели:
+5. Создайте суперпользователя для админ-панели:
 
     ```bash
     python manage.py createsuperuser
     ```
-
-7. Соберите статические файлы (опционально для dev-режима, но требуется для production):
-
-    ```bash
-    python manage.py collectstatic
-    ```
-
+    
 ## Запуск проекта в dev-режиме
 
 Для запуска проекта в режиме разработки (development mode) выполните следующую команду:
