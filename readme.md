@@ -43,13 +43,8 @@
     ```bash
     pip install -r requirements.txt
     ```
-    
-5. Создайте файл .env в корне проекта и добавьте туда переменные окружения:
 
-    SECRET_KEY="django-insecure-+9rpfah-dg7^9s0=w&p_bdy!yhfns^thwb0d@prthiqc91gs_@"
-    DEBUG=True
-
-6. Создайте суперпользователя для админ-панели:
+5. Создайте суперпользователя для админ-панели:
 
     ```bash
     python manage.py createsuperuser
