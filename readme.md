@@ -72,9 +72,11 @@
 
 5. Создайте файл .env в корне проекта и добавьте туда переменные окружения.
 
-    DJANGO_SECRET_KEY="django-insecure-+9rpfah-dg7^9s0=w&p_bdy!yhfns^thwb0d@prthiqc91gs_@"
-    DJANGO_DEBUG=True
-    DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost
+    # Переменные:
+
+        DJANGO_SECRET_KEY="django-insecure-+9rpfah-dg7^9s0=w&p_bdy!yhfns^thwb0d@prthiqc91gs_@"
+        DJANGO_DEBUG=True
+        DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost
 
 6. Создайте суперпользователя для админ-панели:
 
