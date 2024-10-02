@@ -1,6 +1,7 @@
 # Проект Django "Lyceum"
 ![Pipeline Status](https://gitlab.crja72.ru/django/2024/autumn/course/students/286724-betttttt-course-1187/badges/main/pipeline.svg)
 ![Coverage Status](https://gitlab.crja72.ru/django/2024/autumn/course/students/286724-betttttt-course-1187/badges/main/coverage.svg?job=coverage)
+![Last Realease](https://gitlab.crja72.ru/django/2024/autumn/course/students/286724-betttttt-course-1187/-/badges/release.svg?order_by=release_at)
 
 Это учебный проект, созданный на Django 4.2.*, с тремя приложениями: `homepage`, `catalog` и `about`.
 
