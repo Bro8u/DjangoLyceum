@@ -86,7 +86,8 @@
     
 ## Запуск проекта в dev-режиме
 
-Для запуска проекта в режиме разработки (development mode) выполните следующую команду:
+    Для запуска проекта в режиме разработки (development mode) выполните следующую команду:
 
-```bash
-python manage.py runserver
+        ```bash
+        python manage.py runserver
+        ```
