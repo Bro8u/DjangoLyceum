@@ -1,4 +1,7 @@
 # Проект Django "Lyceum"
+![Pipeline Status](https://gitlab.crja72.ru/django/2024/autumn/course/students/286724-betttttt-course-1187/badges/main/pipeline.svg)
+![Coverage Status](https://gitlab.crja72.ru/django/2024/autumn/course/students/286724-betttttt-course-1187/badges/main/coverage.svg?job=coverage)
+![Last Realease](https://gitlab.crja72.ru/django/2024/autumn/course/students/286724-betttttt-course-1187/-/badges/release.svg?order_by=release_at)
 
 Это учебный проект, созданный на Django 4.2.*, с тремя приложениями: `homepage`, `catalog` и `about`.
 
@@ -38,17 +41,45 @@
         .\venv\Scripts\activate
         ```
 
-4. Установите зависимости:
+4. Установка зависимостей
 
-    ```bash
-    pip install -r requirements/prod.txt
-    ```
+    Проект использует разные наборы зависимостей для продакшн-среды, тестирования и разработки. Зависимости разделены на три файла:
+
+    - `requirements/prod.txt` — зависимости для продакшн-среды
+    - `requirements/test.txt` — зависимости для тестирования
+    - `requirements/dev.txt` — зависимости для разработки
+
+    - **Установка продакшн-зависимостей**
+
+        Для установки только продакшн-зависимостей, выполните следующую команду:
+
+        ```bash
+        pip install -r requirements/prod.txt
+        ```
+
+    - **Установка зависемостей для тестирования**
+
+        Для установки только зависемостей для тестирования, выполните следующую команду:
+
+        ```bash
+        pip install -r requirements/test.txt
+        ```  
+
+    - **Установка зависемостей разработки**
+
+        Для установки только зависемостей разработки, выполните следующую команду:
+
+        ```bash
+        pip install -r requirements/dev.txt
+        ```  
 
 5. Создайте файл .env в корне проекта и добавьте туда переменные окружения.
 
-    DJANGO_SECRET_KEY="django-insecure-+9rpfah-dg7^9s0=w&p_bdy!yhfns^thwb0d@prthiqc91gs_@"
-    DJANGO_DEBUG=True
-    DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost
+    ## Переменные:
+
+        DJANGO_SECRET_KEY="django-insecure-+9rpfah-dg7^9s0=w&p_bdy!yhfns^thwb0d@prthiqc91gs_@"
+        DJANGO_DEBUG=True
+        DJANGO_ALLOWED_HOSTS=127.0.0.1,localhost
 
 6. Создайте суперпользователя для админ-панели:
 
@@ -58,7 +89,8 @@
     
 ## Запуск проекта в dev-режиме
 
-Для запуска проекта в режиме разработки (development mode) выполните следующую команду:
+    Для запуска проекта в режиме разработки (development mode) выполните следующую команду:
 
-```bash
-python manage.py runserver
+        ```bash
+        python manage.py runserver
+        ```
