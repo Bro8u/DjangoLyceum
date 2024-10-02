@@ -22,4 +22,4 @@ db.sqlite3
 .DS_Store
 
 #CI
-.flake8
+#.flake8

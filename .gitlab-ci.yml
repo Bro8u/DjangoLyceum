@@ -6,7 +6,7 @@ flake8_lint:
   image: python:3.10
   script:
     - pip install flake8 flake8-import-order flake8-quotes pep8-naming black
-    - flake8 --exclude=venv,.gitignore,readme.md,.env,requirements.txt .
+    - flake8 --config=.flake8
     - black --check .
   only:
     - merge_requests
