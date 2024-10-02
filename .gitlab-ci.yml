@@ -9,3 +9,15 @@ flake8_lint:
   only:
     - merge_requests
     - main
+
+black_lint:
+  stage: lint
+  image: registry.gitlab.com/pipeline-components/black:latest
+  script:
+    - black --check .
+  only:
+    - merge_requests
+    - main
+  allow_failure: false
+
+
