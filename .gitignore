@@ -17,3 +17,6 @@ __pycache__/
 # Миграции базы данных
 *.sqlite3
 db.sqlite3
+
+#MacOs
+.DS_Store
