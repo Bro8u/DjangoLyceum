@@ -1,0 +1,11 @@
+stages:
+  - lint
+
+flake8_lint:
+  stage: lint
+  image: registry.gitlab.com/pipeline-components/flake8:latest
+  script:
+    - flake8 --exclude=venv,.gitignore,readme.md,.env,requirements.txt .
+  only:
+    - merge_requests
+    - main
