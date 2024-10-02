@@ -14,9 +14,6 @@ __pycache__/
 .idea/
 .vscode/
 
-# Статические файлы
-staticfiles/
-
 # Миграции базы данных
 *.sqlite3
 db.sqlite3
