@@ -20,6 +20,3 @@ db.sqlite3
 
 #MacOs
 .DS_Store
-
-#CI
-#.flake8

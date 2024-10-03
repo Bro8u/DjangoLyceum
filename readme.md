@@ -16,7 +16,7 @@
 1. Клонируйте репозиторий:
 
     ```bash
-    git clone <ссылка на ваш репозиторий>
+    git clone git@gitlab.crja72.ru:django/2024/autumn/course/students/286724-betttttt-course-1187.git
     ```
 
 2. Перейдите в директорию проекта:
@@ -73,9 +73,15 @@
         pip install -r requirements/dev.txt
         ```  
 
-5. Создайте файл .env в корне проекта и добавьте туда переменные окружения.
+5. Скопируйте файл `.env.template` в `.env`:
 
-    ## Переменные:
+    - **Создание файла .env на основе шаблона .env.template** 
+
+        ```bash
+        cp .env.template .env
+        ```
+
+    ## Откройте файл .env и добавьте необходимые значения переменных окружения.
 
         DJANGO_SECRET_KEY="django-insecure-+9rpfah-dg7^9s0=w&p_bdy!yhfns^thwb0d@prthiqc91gs_@"
         DJANGO_DEBUG=True
@@ -89,7 +95,7 @@
     
 ## Запуск проекта в dev-режиме
 
-    Для запуска проекта в режиме разработки (development mode) выполните следующую команду:
+- **Для запуска проекта в режиме разработки(developmentmode) выполните следующую команду:**
 
         ```bash
         python manage.py runserver
