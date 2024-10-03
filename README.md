@@ -95,6 +95,6 @@
 
 - **Для запуска проекта в режиме разработки(developmentmode) выполните следующую команду:**
 
-        ```bash
-        python manage.py runserver
-        ```
+    ```bash
+    python manage.py runserver
+    ```
