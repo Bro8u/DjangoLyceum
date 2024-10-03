@@ -1,12 +1,18 @@
-# Виртуальное окружение
+# Прочитал твой комментарий, по первой ссылке в google 
+# https://github.com/github/gitignore/blob/main/Python.gitignore
+# грамадина с кучей лишнего, вряд ли это хорошая практика пихать ее сюда
+# поэтому оставил как есть, так как не понял, как это поменять в лучшую сторону
+# Единственное, что из того шаблона название к разделам взял.
+
+# Environments
 .env
 venv/
 
-# Файлы Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 
-# Логи
+# Installer logs
 *.log
 *.pot
 
@@ -14,7 +20,7 @@ __pycache__/
 .idea/
 .vscode/
 
-# Миграции базы данных
+# Django stuff:
 *.sqlite3
 db.sqlite3
 
