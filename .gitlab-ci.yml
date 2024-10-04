@@ -14,7 +14,7 @@ black_lint:
   stage: lint
   image: registry.gitlab.com/pipeline-components/black:latest
   script:
-    - black --check .
+    - black --check . --config=pyproject.toml
   only:
     - merge_requests
     - main
