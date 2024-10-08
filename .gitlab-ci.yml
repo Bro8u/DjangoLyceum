@@ -28,10 +28,9 @@ django_tests:
     DJANGO_SETTINGS_MODULE: lyceum.settings 
     PYTHONUNBUFFERED: 1
   before_script:
-    - pip install -r requirements/test.txt 
-    - pip install -r requirements/prod.txt 
+    - pip install -r requirements/dev.txt 
   script:
-    - python manage.py test
+    - python3 lyceum/manage.py test
   only:
     - merge_requests
     - main

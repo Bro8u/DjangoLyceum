@@ -35,7 +35,7 @@
     - **Windows**:
 
         ```bash
-        python -m venv venv
+        python3 -m venv venv
         .\venv\Scripts\activate
         ```
 
@@ -88,7 +88,7 @@
 6. Создайте суперпользователя для админ-панели:
 
     ```bash
-    python manage.py createsuperuser
+    python3 lyceum/manage.py createsuperuser
     ```
     
 ## Запуск проекта в dev-режиме
@@ -96,5 +96,5 @@
 - **Для запуска проекта в режиме разработки(developmentmode) выполните следующую команду:**
 
     ```bash
-    python manage.py runserver
+    python3 lyceum/manage.py runserver
     ```
