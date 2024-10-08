@@ -1,2 +1,2 @@
-django-debug-toolbar==4.4.6
 -r prod.txt
+django-debug-toolbar==4.4.6

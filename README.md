@@ -88,7 +88,7 @@
 6. Создайте суперпользователя для админ-панели:
 
     ```bash
-    python3 lyceum/manage.py createsuperuser
+    python3 manage.py createsuperuser
     ```
     
 ## Запуск проекта в dev-режиме
@@ -96,5 +96,5 @@
 - **Для запуска проекта в режиме разработки(developmentmode) выполните следующую команду:**
 
     ```bash
-    python3 lyceum/manage.py runserver
+    python3 manage.py runserver
     ```
