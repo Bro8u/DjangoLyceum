@@ -1,5 +1,6 @@
 stages:
   - lint
+  - test
 
 flake8_lint:
   stage: lint
@@ -19,3 +20,18 @@ black_lint:
     - merge_requests
     - main
   allow_failure: false
+
+django_tests:
+  stage: test  
+  image: python:3.10 
+  variables:
+    DJANGO_SETTINGS_MODULE: lyceum.settings 
+    PYTHONUNBUFFERED: 1
+  before_script:
+    - pip install -r requirements/test.txt 
+    - pip install -r requirements/prod.txt 
+  script:
+    - python manage.py test
+  only:
+    - merge_requests
+    - main

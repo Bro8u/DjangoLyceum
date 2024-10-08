@@ -1,5 +1,5 @@
 from django.http import HttpResponse
 
 
-def about(request):
-    return HttpResponse("Welcome to the about page!")
+def description(request):
+    return HttpResponse("<body>О проекте</body>")
