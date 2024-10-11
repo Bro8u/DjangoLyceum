@@ -14,7 +14,7 @@ DEBUG_ENV = os.getenv("DJANGO_DEBUG", "False").lower()
 DEBUG = DEBUG_ENV in ("true", "yes", "1", "y", "t")
 
 
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(
     ","
 )
 
