@@ -4,9 +4,9 @@ from django.urls import include, path
 from lyceum import settings
 
 urlpatterns = [
+    path("admin/", admin.site.urls),
     path("", include("homepage.urls")),
     path("about/", include("about.urls")),
-    path("admin/", admin.site.urls),
     path("catalog/", include("catalog.urls")),
 ]
 
