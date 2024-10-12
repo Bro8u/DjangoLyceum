@@ -2,6 +2,6 @@
 max-line-length = 79
 exclude = venv,.gitignore,readme.md,.env,requirements.txt
 import-order-style = pep8
-application-import-names = lyceum
+application-import-names = about, catalog, homepage, lyceum
 inline-quotes = double
 enable-extensions = B,B902,N

@@ -9,7 +9,9 @@ def item_detail(request, id):
     return HttpResponse(f"<body>Подробно элемент {id}</body>")
 
 
-def reqular_expression(request, number=1):
+def reqular_expression(request, number):
+    if number == 0:
+        raise ValueError("Только нули")
     return HttpResponse(number)
 
 
