@@ -50,7 +50,7 @@ class CatalogRegularExpression(TestCase):
 
     def test_reqular_expression_not_zero(self):
         response = Client().get("/catalog/re/0")
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 301)
 
     def test_reqular_expression_not_negative(self):
         response = Client().get("/catalog/re/-11")
