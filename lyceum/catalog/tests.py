@@ -49,11 +49,10 @@ class CatalogRegularExpression(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_reqular_expression_not_zero(self):
-        response = Client().get("/catalog/re/0")
-        self.assertEqual(response.status_code, 301)
+        self.assertEqual(Client().get("/catalog/re/0/").status_code, 404)
 
     def test_reqular_expression_not_negative(self):
-        response = Client().get("/catalog/re/-11")
+        response = Client().get("/catalog/re/-11/")
         self.assertEqual(response.status_code, 404)
 
 
@@ -77,9 +76,9 @@ class CatalogConverter(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_converter_number_not_zero(self):
-        response = Client().get("/catalog/converter/0")
+        response = Client().get("/catalog/converter/0/")
         self.assertEqual(response.status_code, 404)
 
     def test_converter_number_not_negative(self):
-        response = Client().get("/catalog/converter/-11")
+        response = Client().get("/catalog/converter/-11/")
         self.assertEqual(response.status_code, 404)

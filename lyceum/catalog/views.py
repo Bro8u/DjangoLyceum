@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 
 
 def item_list(request):
@@ -10,8 +10,8 @@ def item_detail(request, id):
 
 
 def reqular_expression(request, number):
-    if number == 0:
-        raise ValueError("Только нули")
+    if number.count("0") == len(number):
+        raise Http404("Только нули")
     return HttpResponse(number)
 
 
