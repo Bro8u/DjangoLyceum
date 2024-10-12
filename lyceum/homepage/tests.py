@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 from django.test import Client, TestCase
 from django.urls import reverse
 
@@ -16,7 +18,7 @@ class HomepageUrlTests(TestCase):
         response = Client().get("/")
         self.assertContains(response, "Главная")
 
-    def test_homepage_coffee_url(self):
+    def test_homepage_coffee_status(self):
         response = Client().get("/coffee/")
         self.assertEqual(response.status_code, 418)
 
@@ -28,3 +30,7 @@ class HomepageUrlTests(TestCase):
     def test_homepage_coffee_content(self):
         response = Client().get("/coffee/")
         self.assertContains(response, "Я чайник", status_code=418)
+
+    def status_i_am_teapot(self):
+        response = Client().get("/coffee/")
+        self.assertEqual(response.status_code, HTTPStatus.IM_A_TEAPOT)
