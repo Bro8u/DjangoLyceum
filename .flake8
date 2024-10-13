@@ -1,7 +1,7 @@
 [flake8]
 max-line-length = 79
 exclude = venv,.gitignore,readme.md,.env,requirements.txt
-import-order-style = pep8
+import-order-style = google
 application-import-names = about, catalog, homepage, lyceum
 inline-quotes = double
 enable-extensions = B,B902,N

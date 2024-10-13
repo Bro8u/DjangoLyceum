@@ -1,14 +1,16 @@
 import re
 
-from django.utils.deprecation import MiddlewareMixin
 from django.conf import settings
 
 
-class ReverseTextMiddleware(MiddlewareMixin):
-    count_responses = 0
+class ReverseWordsMiddleware:
 
-    def process_response(self, request, response):
+    def __init__(self, get_response):
+        self.get_response = get_response
+        self.count_responses = 0
 
+    def __call__(self, request):
+        response = self.get_response(request)
         self.count_responses += 1
         self.count_responses %= 10
 
@@ -17,16 +19,22 @@ class ReverseTextMiddleware(MiddlewareMixin):
 
         content = response.content.decode("utf-8")
 
-        def reverse_text(match):
-            return match.group(1)[::-1]
+        def reverse_word(word):
+            return word[::-1]
 
         pattern = re.compile(r">([^<]+)<")
-        reversed_content = re.sub(
-            pattern, lambda m: f">{reverse_text(m)}<", content
-        )
+
+        def reverse_text_in_tag(match):
+            text_inside_tags = match.group(1)
+            words = text_inside_tags.split()
+            reversed_words = [reverse_word(word) for word in words]
+            return f">{' '.join(reversed_words)}<"
+
+        reversed_content = re.sub(pattern, reverse_text_in_tag, content)
 
         if not re.search(r"<[^>]+>", content):
-            reversed_content = content[::-1]
+            words = content.split()
+            reversed_content = " ".join(reverse_word(word) for word in words)
 
         response.content = reversed_content.encode("utf-8")
 
