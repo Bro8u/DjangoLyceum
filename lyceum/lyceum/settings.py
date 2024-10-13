@@ -6,13 +6,15 @@ from dotenv import load_dotenv
 load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ALLOW_ENV = os.getenv("DJANGO_ALLOW_REVERSE", "False").lower()
+
+ALLOW_REVERSE = ALLOW_ENV in ("true", "yes", "1", "y", "")
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "abba")
 
 DEBUG_ENV = os.getenv("DJANGO_DEBUG", "False").lower()
 
 DEBUG = DEBUG_ENV in ("true", "yes", "1", "y", "t")
-
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(
     ","
@@ -31,6 +33,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "lyceum.middleware.ReverseTextMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
