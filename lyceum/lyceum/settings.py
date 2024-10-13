@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOW_ENV = os.getenv("DJANGO_ALLOW_REVERSE", "False").lower()
+ALLOW_ENV = os.getenv("DJANGO_ALLOW_REVERSE", "True").lower()
 
 ALLOW_REVERSE = ALLOW_ENV in ("true", "yes", "1", "y", "")
 
