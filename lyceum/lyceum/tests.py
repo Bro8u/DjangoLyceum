@@ -8,7 +8,6 @@ class TestMiddlewareReverse(TestCase):
         client = Client()
         for response_number in range(1, 11):
             response = client.get("/")
-            print(response_number, response.content.decode("utf-8"))
             if response_number % 10 == 0:
                 self.assertContains(response, "яанвалГ".encode("utf-8"))
             else:
