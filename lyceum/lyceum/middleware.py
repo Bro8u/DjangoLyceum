@@ -10,12 +10,21 @@ class ReverseWordsMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        response = self.get_response(request)
-        self.count_responses += 1
-        self.count_responses %= 10
 
-        if self.count_responses != 0 or not settings.ALLOW_REVERSE:
+        response = self.get_response(request)
+
+        if not settings.ALLOW_REVERSE or (
+            response.status_code != 200 and response.status_code != 418
+        ):
+
             return response
+
+        ReverseWordsMiddleware.count_responses += 1
+
+        if self.count_responses % 10 != 0:
+            return response
+
+        ReverseWordsMiddleware.count_responses = 0
 
         content = response.content.decode("utf-8")
 
