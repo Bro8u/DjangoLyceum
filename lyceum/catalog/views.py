@@ -1,4 +1,4 @@
-from django.http import Http404, HttpResponse
+from django.http import HttpResponse
 
 
 def item_list(request):
@@ -9,11 +9,5 @@ def item_detail(request, id):
     return HttpResponse(f"<body>Подробно элемент {id}</body>")
 
 
-def reqular_expression(request, number):
-    if number.count("0") == len(number):
-        raise Http404("Только нули")
-    return HttpResponse(number)
-
-
-def converter(request, number):
+def converter_and_reqular_expression(request, number):
     return HttpResponse(number)

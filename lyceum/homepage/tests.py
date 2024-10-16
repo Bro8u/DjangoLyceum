@@ -1,36 +1,19 @@
 from http import HTTPStatus
 
 from django.test import Client, TestCase
-from django.urls import reverse
+from parameterized import parameterized
 
 
 class HomepageUrlTests(TestCase):
-    def test_homepage_url(self):
-        response = Client().get("/")
-        self.assertEqual(response.status_code, 200)
 
-    def test_homepage_url_by_name(self):
-        url = reverse("home")
+    @parameterized.expand(
+        [
+            ("/coffee/", HTTPStatus.IM_A_TEAPOT, "Я чайник"),
+            ("/", HTTPStatus.OK, "Главна"),
+        ]
+    )
+    def test_status_and_content(self, url, expected_status, expected_content):
         response = Client().get(url)
-        self.assertEqual(response.status_code, 200)
-
-    def test_homepage_content(self):
-        response = Client().get("/")
-        self.assertContains(response, "Главная")
-
-    def test_homepage_coffee_status(self):
-        response = Client().get("/coffee/")
-        self.assertEqual(response.status_code, 418)
-
-    def test_homepage_coffee_url_by_name(self):
-        url = reverse("coffee")
-        response = Client().get(url)
-        self.assertEqual(response.status_code, 418)
-
-    def test_homepage_coffee_content(self):
-        response = Client().get("/coffee/")
-        self.assertContains(response, "Я чайник", status_code=418)
-
-    def status_i_am_teapot(self):
-        response = Client().get("/coffee/")
-        self.assertEqual(response.status_code, HTTPStatus.IM_A_TEAPOT)
+        self.assertContains(
+            response, expected_content, status_code=expected_status
+        )

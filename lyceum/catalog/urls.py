@@ -8,13 +8,13 @@ urlpatterns = [
     path("", views.item_list, name="item_list"),
     path("<int:id>/", views.item_detail, name="item_detail"),
     re_path(
-        r"^re/(?P<number>[0-9]\d*)/$",
-        views.reqular_expression,
+        r"^re/(?P<number>0*[1-9]{1,}\d*)/$",
+        views.converter_and_reqular_expression,
         name="reqular_expression",
     ),
     path(
         "converter/<custom_converter:number>/",
-        views.converter,
+        views.converter_and_reqular_expression,
         name="converter",
     ),
 ]

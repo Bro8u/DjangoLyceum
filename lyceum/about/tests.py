@@ -1,17 +1,17 @@
+from http import HTTPStatus
+
 from django.test import Client, TestCase
-from django.urls import reverse
+from parameterized import parameterized
 
 
 class CatalogUrlTests(TestCase):
-    def test_about_url(self):
-        response = Client().get("/about/")
-        self.assertEqual(response.status_code, 200)
-
-    def test_about_url_by_name(self):
-        url = reverse("description")
+    @parameterized.expand(
+        [
+            ("/about/", HTTPStatus.OK, "О проекте"),
+        ]
+    )
+    def test_status_and_content(self, url, expected_status, expected_content):
         response = Client().get(url)
-        self.assertEqual(response.status_code, 200)
-
-    def test_about_content(self):
-        response = Client().get("/about/")
-        self.assertContains(response, "О проекте")
+        self.assertContains(
+            response, expected_content, status_code=expected_status
+        )
