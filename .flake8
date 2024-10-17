@@ -1,6 +1,6 @@
 [flake8]
 max-line-length = 79
-exclude = venv,.gitignore,readme.md,.env,requirements.txt
+exclude = venv,.gitignore,readme.md,.env,requirements.txt, */migrations/
 import-order-style = google
 application-import-names = about, catalog, homepage, lyceum
 inline-quotes = double

@@ -1,0 +1,135 @@
+[
+{
+  "model": "catalog.catalogitem",
+  "pk": 1,
+  "fields": {
+    "is_published": true,
+    "name": "n1",
+    "text": "роскошно",
+    "category": 2,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "catalog.catalogitem",
+  "pk": 2,
+  "fields": {
+    "is_published": true,
+    "name": "n2",
+    "text": "роскошно",
+    "category": 3,
+    "tags": [
+      2
+    ]
+  }
+},
+{
+  "model": "catalog.catalogitem",
+  "pk": 3,
+  "fields": {
+    "is_published": true,
+    "name": "n3",
+    "text": "роскошно",
+    "category": 4,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "catalog.catalogitem",
+  "pk": 4,
+  "fields": {
+    "is_published": true,
+    "name": "n4",
+    "text": "роскошно",
+    "category": 5,
+    "tags": [
+      2
+    ]
+  }
+},
+{
+  "model": "catalog.catalogitem",
+  "pk": 5,
+  "fields": {
+    "is_published": true,
+    "name": "n5",
+    "text": "роскошно",
+    "category": 6,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "catalog.catalogtag",
+  "pk": 1,
+  "fields": {
+    "name": "дешево",
+    "is_published": true,
+    "slug": "1"
+  }
+},
+{
+  "model": "catalog.catalogtag",
+  "pk": 2,
+  "fields": {
+    "name": "дорого",
+    "is_published": true,
+    "slug": "2"
+  }
+},
+{
+  "model": "catalog.catalogcategory",
+  "pk": 2,
+  "fields": {
+    "is_published": true,
+    "name": "1",
+    "slug": "123",
+    "weight": 100
+  }
+},
+{
+  "model": "catalog.catalogcategory",
+  "pk": 3,
+  "fields": {
+    "is_published": true,
+    "name": "2",
+    "slug": "1",
+    "weight": 100
+  }
+},
+{
+  "model": "catalog.catalogcategory",
+  "pk": 4,
+  "fields": {
+    "is_published": true,
+    "name": "3",
+    "slug": "12",
+    "weight": 100
+  }
+},
+{
+  "model": "catalog.catalogcategory",
+  "pk": 5,
+  "fields": {
+    "is_published": true,
+    "name": "4",
+    "slug": "13",
+    "weight": 100
+  }
+},
+{
+  "model": "catalog.catalogcategory",
+  "pk": 6,
+  "fields": {
+    "is_published": true,
+    "name": "5",
+    "slug": "3",
+    "weight": 100
+  }
+}
+]
