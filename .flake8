@@ -2,6 +2,6 @@
 max-line-length = 79
 exclude = venv,.gitignore,readme.md,.env,requirements.txt, */migrations/
 import-order-style = google
-application-import-names = about, catalog, homepage, lyceum
+application-import-names = about, catalog, homepage, lyceum, core
 inline-quotes = double
 enable-extensions = B,B902,N

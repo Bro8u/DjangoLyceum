@@ -106,29 +106,31 @@ class CatalogTagModelTest(TestCase):
 class CatalogCategoryModelTest(TestCase):
 
     def setUp(self):
-        self.tag = catalog.models.CatalogCategory.objects.create(
-            name="Тестовая категория", slug="test-slug"
+        self.cat = catalog.models.CatalogCategory.objects.create(
+            name="Тестовая категория", slug="test-slug", weight=150
         )
 
-    def test_tag_create(self):
-        tags_count = catalog.models.CatalogCategory.objects.count()
+    def test_category_create(self):
+        cats_count = catalog.models.CatalogCategory.objects.count()
 
-        self.tag1 = catalog.models.CatalogCategory(
+        self.cat1 = catalog.models.CatalogCategory(
             name="Тестовая", slug="test-slug-new"
         )
-        self.tag1.full_clean()
-        self.tag1.save()
+        self.cat1.full_clean()
+        self.cat1.save()
 
         self.assertEqual(
             catalog.models.CatalogCategory.objects.count(),
-            tags_count + 1,
+            cats_count + 1,
         )
 
-    def test_tag_unique_slug(self):
+    def test_category_unique_slug(self):
         cats_count = catalog.models.CatalogCategory.objects.count()
         with self.assertRaises(django.core.exceptions.ValidationError):
             self.cat_duplicate = catalog.models.CatalogCategory(
-                name="Тестовая", slug="test-slug"  # Такой slug уже существует
+                name="Тестовая",
+                slug="test-slug",
+                weight=150,  # Такой slug уже существует
             )
             self.cat_duplicate.full_clean()
             self.cat_duplicate.save()
@@ -137,17 +139,17 @@ class CatalogCategoryModelTest(TestCase):
             cats_count,
         )
 
-    def test_tag_permitted_symbols(self):
-        tags_count = catalog.models.CatalogCategory.objects.count()
+    def test_category_permitted_symbols(self):
+        cats_count = catalog.models.CatalogCategory.objects.count()
         with self.assertRaises(django.core.exceptions.ValidationError):
             self.cat1 = catalog.models.CatalogCategory(
-                name="Тестовая", slug="test-slug#"  # no
+                name="Тестовая", slug="test-slug#", weight=150  # no
             )
             self.cat1.full_clean()
             self.cat1.save()
         self.assertEqual(
             catalog.models.CatalogCategory.objects.count(),
-            tags_count,
+            cats_count,
         )
 
 

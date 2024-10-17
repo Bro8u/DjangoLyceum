@@ -1,14 +1,14 @@
 import re
 
-from core.models import CommonFieldsModel
-import django.core.exceptions
-import django.core.validators
+from django.core import exceptions, validators
 from django.db import models
+
+from core.models import CommonFieldsModel
 
 
 def validate_text(value):
     if not re.search(r"\b(превосходно|роскошно)\b", value, re.IGNORECASE):
-        raise django.core.exceptions.ValidationError(
+        raise exceptions.ValidationError(
             'Текст должен содержать слово "превосходно" или "роскошно".'
         )
 
@@ -33,7 +33,7 @@ class CatalogItem(CommonFieldsModel):
         return self.name
 
 
-slug_validator = django.core.validators.RegexValidator(
+slug_validator = validators.RegexValidator(
     regex=r"^[a-zA-Z0-9_-]+$",
     message="Слаг может содержать только"
     "латинские буквы, цифры, дефисы и подчёркивания.",
@@ -69,8 +69,8 @@ class CatalogCategory(CommonFieldsModel):
         default=100,
         verbose_name="Вес",
         validators=[
-            django.core.validators.MinValueValidator(0),
-            django.core.validators.MaxValueValidator(32767),
+            validators.MinValueValidator(0),
+            validators.MaxValueValidator(32767),
         ],
     )
 

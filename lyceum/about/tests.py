@@ -13,5 +13,7 @@ class CatalogUrlTests(TestCase):
     def test_status_and_content(self, url, expected_status, expected_content):
         response = Client().get(url)
         self.assertContains(
-            response, expected_content, status_code=expected_status
+            response,
+            expected_content,
+            status_code=expected_status,
         )

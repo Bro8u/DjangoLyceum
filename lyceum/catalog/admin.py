@@ -5,10 +5,13 @@ import catalog.models
 
 @admin.register(catalog.models.CatalogItem)
 class CatalogItemAdmin(admin.ModelAdmin):
-    list_display = ("name", "is_published")
+    list_display = (
+        catalog.models.CatalogItem.name.field.name,
+        catalog.models.CatalogItem.is_published.field.name,
+    )
     list_editable = ("is_published",)
     list_display_links = ("name",)
-    filter_horizontal = ("tags",)
+    filter_horizontal = (catalog.models.CatalogItem.tags.field.name,)
 
 
 admin.site.register(catalog.models.CatalogCategory)
