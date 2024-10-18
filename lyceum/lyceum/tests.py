@@ -45,7 +45,10 @@ class TestMiddlewareReverse(TestCase):
     )
     @override_settings(ALLOW_REVERSE=False)
     def test_middleware_reverse_off(
-        self, url, expected_status, expected_content
+        self,
+        url,
+        expected_status,
+        expected_content,
     ):
         client = Client()
         for _response_number in range(1, 11):

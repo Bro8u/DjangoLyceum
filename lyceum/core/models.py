@@ -9,13 +9,13 @@ class CommonFieldsModel(models.Model):
     )
     is_published = models.BooleanField(
         default=True,
-        verbose_name="Опубликовано",
+        verbose_name="опубликовано",
     )
     name = models.CharField(
         max_length=150,
         unique=True,
-        verbose_name="Название",
-        help_text="Введите короткое имя, не более 50 символов.",
+        verbose_name="название",
+        help_text="Введите короткое название, не более 50 символов.",
     )
 
     class Meta:

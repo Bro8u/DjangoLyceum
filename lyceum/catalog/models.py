@@ -9,33 +9,8 @@ from core.models import CommonFieldsModel
 def validate_text(value):
     if not re.search(r"\b(превосходно|роскошно)\b", value, re.IGNORECASE):
         raise exceptions.ValidationError(
-            'Текст должен содержать слово "превосходно" или "роскошно".'
+            'Текст должен содержать слово "превосходно" или "роскошно".',
         )
-
-
-class Item(CommonFieldsModel):
-    text = models.TextField(
-        validators=[validate_text],
-        verbose_name="Текст",
-        help_text="Введите полное описание товара.",
-    )
-    category = models.ForeignKey(
-        "Category",
-        on_delete=models.CASCADE,
-        related_name="items",
-        verbose_name="Категория",
-    )
-    tags = models.ManyToManyField(
-        "Tag", related_name="items", verbose_name="Теги"
-    )
-    TAGS_FIELD = "tags"
-
-    class Meta:
-        verbose_name = "Товар"
-        verbose_name_plural = "Товары"
-
-    def __str__(self):
-        return self.name
 
 
 slug_validator = validators.RegexValidator(
@@ -46,33 +21,33 @@ slug_validator = validators.RegexValidator(
 
 
 class Tag(CommonFieldsModel):
-    slug = models.TextField(
+    slug = models.SlugField(
         max_length=200,
         unique=True,
-        verbose_name="Слаг",
+        verbose_name="слаг",
         validators=[slug_validator],
         help_text="Только цифры, латинские буквы, символы '-' и '_'.",
     )
 
     class Meta:
-        verbose_name = "Тег"
-        verbose_name_plural = "Теги"
+        verbose_name = "тег"
+        verbose_name_plural = "теги"
 
     def __str__(self):
         return self.name
 
 
 class Category(CommonFieldsModel):
-    slug = models.TextField(
+    slug = models.SlugField(
         max_length=200,
         unique=True,
-        verbose_name="Слаг",
+        verbose_name="слаг",
         validators=[slug_validator],
         help_text="Только цифры, латинские буквы, символы '-' и '_'.",
     )
     weight = models.IntegerField(
         default=100,
-        verbose_name="Вес",
+        verbose_name="вес",
         validators=[
             validators.MinValueValidator(0),
             validators.MaxValueValidator(32767),
@@ -81,8 +56,29 @@ class Category(CommonFieldsModel):
     )
 
     class Meta:
-        verbose_name = "Категория"
-        verbose_name_plural = "Категории"
+        verbose_name = "категория"
+        verbose_name_plural = "категории"
+
+    def __str__(self):
+        return self.name
+
+
+class Item(CommonFieldsModel):
+    text = models.TextField(
+        validators=[validate_text],
+        verbose_name="Текст",
+        help_text="Введите полное описание товара.",
+    )
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+    )
+    tags = models.ManyToManyField(Tag)
+    TAGS_FIELD = "tags"
+
+    class Meta:
+        verbose_name = "товар"
+        verbose_name_plural = "товары"
 
     def __str__(self):
         return self.name

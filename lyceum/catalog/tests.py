@@ -180,7 +180,9 @@ class CatalogMain(TestCase):
     ):
         response = Client().get(url)
         self.assertContains(
-            response, expected_content, status_code=expected_status
+            response,
+            expected_content,
+            status_code=expected_status,
         )
 
 
