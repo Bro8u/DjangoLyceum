@@ -8,9 +8,14 @@ class CatalogUrlTests(TestCase):
     @parameterized.expand(
         [
             ("/about/", HTTPStatus.OK, "О проекте"),
-        ]
+        ],
     )
-    def test_status_and_content(self, url, expected_status, expected_content):
+    def test_status_and_content(
+        self,
+        url,
+        expected_status,
+        expected_content,
+    ):
         response = Client().get(url)
         self.assertContains(
             response,

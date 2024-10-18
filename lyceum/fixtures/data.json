@@ -1,134 +1,132 @@
 [
 {
-  "model": "catalog.catalogitem",
+  "model": "catalog.item",
   "pk": 1,
   "fields": {
     "is_published": true,
     "name": "n1",
     "text": "роскошно",
-    "category": 2,
+    "category": 1,
     "tags": [
       1
     ]
   }
 },
 {
-  "model": "catalog.catalogitem",
+  "model": "catalog.item",
   "pk": 2,
   "fields": {
     "is_published": true,
     "name": "n2",
     "text": "роскошно",
-    "category": 3,
+    "category": 2,
     "tags": [
       2
     ]
   }
 },
 {
-  "model": "catalog.catalogitem",
+  "model": "catalog.item",
   "pk": 3,
   "fields": {
     "is_published": true,
     "name": "n3",
     "text": "роскошно",
-    "category": 4,
+    "category": 1,
     "tags": [
-      1
+      3
     ]
   }
 },
 {
-  "model": "catalog.catalogitem",
+  "model": "catalog.item",
   "pk": 4,
   "fields": {
     "is_published": true,
     "name": "n4",
-    "text": "роскошно",
-    "category": 5,
+    "text": "превосходно",
+    "category": 1,
     "tags": [
-      2
+      4
     ]
   }
 },
 {
-  "model": "catalog.catalogitem",
+  "model": "catalog.item",
   "pk": 5,
   "fields": {
     "is_published": true,
     "name": "n5",
-    "text": "роскошно",
-    "category": 6,
+    "text": "превосходно",
+    "category": 1,
     "tags": [
-      1
+      3,
+      5
     ]
   }
 },
 {
-  "model": "catalog.catalogtag",
+  "model": "catalog.tag",
   "pk": 1,
   "fields": {
-    "name": "дешево",
     "is_published": true,
+    "name": "1",
     "slug": "1"
   }
 },
 {
-  "model": "catalog.catalogtag",
+  "model": "catalog.tag",
   "pk": 2,
   "fields": {
-    "name": "дорого",
     "is_published": true,
+    "name": "2",
     "slug": "2"
   }
 },
 {
-  "model": "catalog.catalogcategory",
-  "pk": 2,
-  "fields": {
-    "is_published": true,
-    "name": "1",
-    "slug": "123",
-    "weight": 100
-  }
-},
-{
-  "model": "catalog.catalogcategory",
+  "model": "catalog.tag",
   "pk": 3,
   "fields": {
     "is_published": true,
-    "name": "2",
-    "slug": "1",
-    "weight": 100
+    "name": "3",
+    "slug": "3"
   }
 },
 {
-  "model": "catalog.catalogcategory",
+  "model": "catalog.tag",
   "pk": 4,
   "fields": {
     "is_published": true,
-    "name": "3",
-    "slug": "12",
-    "weight": 100
+    "name": "4",
+    "slug": "4"
   }
 },
 {
-  "model": "catalog.catalogcategory",
+  "model": "catalog.tag",
   "pk": 5,
   "fields": {
     "is_published": true,
-    "name": "4",
-    "slug": "13",
+    "name": "5",
+    "slug": "5"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 1,
+  "fields": {
+    "is_published": true,
+    "name": "asdf",
+    "slug": "asdf",
     "weight": 100
   }
 },
 {
-  "model": "catalog.catalogcategory",
-  "pk": 6,
+  "model": "catalog.category",
+  "pk": 2,
   "fields": {
     "is_published": true,
-    "name": "5",
-    "slug": "3",
+    "name": "asdf2",
+    "slug": "asdf2",
     "weight": 100
   }
 }

@@ -13,17 +13,22 @@ def validate_text(value):
         )
 
 
-class CatalogItem(CommonFieldsModel):
-    text = models.TextField(validators=[validate_text], verbose_name="Текст")
+class Item(CommonFieldsModel):
+    text = models.TextField(
+        validators=[validate_text],
+        verbose_name="Текст",
+        help_text="Введите полное описание товара.",
+    )
     category = models.ForeignKey(
-        "CatalogCategory",
+        "Category",
         on_delete=models.CASCADE,
         related_name="items",
         verbose_name="Категория",
     )
     tags = models.ManyToManyField(
-        "CatalogTag", related_name="items", verbose_name="Теги"
+        "Tag", related_name="items", verbose_name="Теги"
     )
+    TAGS_FIELD = "tags"
 
     class Meta:
         verbose_name = "Товар"
@@ -40,8 +45,8 @@ slug_validator = validators.RegexValidator(
 )
 
 
-class CatalogTag(CommonFieldsModel):
-    slug = models.SlugField(
+class Tag(CommonFieldsModel):
+    slug = models.TextField(
         max_length=200,
         unique=True,
         verbose_name="Слаг",
@@ -57,21 +62,22 @@ class CatalogTag(CommonFieldsModel):
         return self.name
 
 
-class CatalogCategory(CommonFieldsModel):
-    slug = models.SlugField(
+class Category(CommonFieldsModel):
+    slug = models.TextField(
         max_length=200,
         unique=True,
         verbose_name="Слаг",
         validators=[slug_validator],
         help_text="Только цифры, латинские буквы, символы '-' и '_'.",
     )
-    weight = models.PositiveSmallIntegerField(
+    weight = models.IntegerField(
         default=100,
         verbose_name="Вес",
         validators=[
             validators.MinValueValidator(0),
             validators.MaxValueValidator(32767),
         ],
+        help_text="Введите целое число от 0 до 32767",
     )
 
     class Meta:

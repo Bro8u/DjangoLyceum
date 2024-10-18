@@ -3,16 +3,16 @@ from django.contrib import admin
 import catalog.models
 
 
-@admin.register(catalog.models.CatalogItem)
+@admin.register(catalog.models.Item)
 class CatalogItemAdmin(admin.ModelAdmin):
     list_display = (
-        catalog.models.CatalogItem.name.field.name,
-        catalog.models.CatalogItem.is_published.field.name,
+        catalog.models.Item.NAME_FIELD,
+        catalog.models.Item.IS_PUBLISHED_FIELD,
     )
-    list_editable = ("is_published",)
-    list_display_links = ("name",)
-    filter_horizontal = (catalog.models.CatalogItem.tags.field.name,)
+    list_editable = (catalog.models.Item.IS_PUBLISHED_FIELD,)
+    list_display_links = (catalog.models.Item.NAME_FIELD,)
+    filter_horizontal = (catalog.models.Item.TAGS_FIELD,)
 
 
-admin.site.register(catalog.models.CatalogCategory)
-admin.site.register(catalog.models.CatalogTag)
+admin.site.register(catalog.models.Category)
+admin.site.register(catalog.models.Tag)

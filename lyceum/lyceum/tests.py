@@ -12,11 +12,15 @@ class TestMiddlewareReverse(TestCase):
     @parameterized.expand(
         [
             ("/", HTTPStatus.OK, "Главная", "яанвалГ"),
-        ]
+        ],
     )
     @override_settings(ALLOW_REVERSE=True)
     def test_middleware_reverse_on(
-        self, url, expected_status, expected_content_1, expected_content_2
+        self,
+        url,
+        expected_status,
+        expected_content_1,
+        expected_content_2,
     ):
         client = Client()
         for response_number in range(1, 11):
@@ -37,7 +41,7 @@ class TestMiddlewareReverse(TestCase):
     @parameterized.expand(
         [
             ("/", HTTPStatus.OK, "Главная"),
-        ]
+        ],
     )
     @override_settings(ALLOW_REVERSE=False)
     def test_middleware_reverse_off(
@@ -57,15 +61,18 @@ class TestReverseCyrillicWords(unittest.TestCase):
 
     def test_reverse_cyrillic_words(self):
         self.assertEqual(
-            reverse_cyrillic_words("Привет, мир!"), "тевирП, рим!"
+            reverse_cyrillic_words("Привет, мир!"),
+            "тевирП, рим!",
         )
         self.assertEqual(
             reverse_cyrillic_words("Тест 1234 тестирование!"),
             "тсеТ 1234 еинаворитсет!",
         )
         self.assertEqual(
-            reverse_cyrillic_words("Hello World!"), "Hello World!"
+            reverse_cyrillic_words("Hello World!"),
+            "Hello World!",
         )
         self.assertEqual(
-            reverse_cyrillic_words("<body>Код</body>"), "<body>доК</body>"
+            reverse_cyrillic_words("<body>Код</body>"),
+            "<body>доК</body>",
         )
