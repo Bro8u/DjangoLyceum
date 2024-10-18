@@ -7,9 +7,9 @@ from core.models import CommonFieldsModel
 
 
 def validate_text(value):
-    if not re.search(r"\b(превосходно|роскошно)\b", value, re.IGNORECASE):
+    if not re.search(r"\b(превосход\w*|роскош\w*)\b", value, re.IGNORECASE):
         raise exceptions.ValidationError(
-            'Текст должен содержать слово "превосходно" или "роскошно".',
+            'Текст должен содержать слово с корнем "превосход" или "роскош".',
         )
 
 
