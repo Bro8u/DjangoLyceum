@@ -10,5 +10,5 @@ def validate_text(value):
     words = set(WORDS_REGEX.findall(value.lower()))
     if not {"превосходно", "роскошно"} & words:
         raise ValidationError(
-            'В тексте должно быть слово "превосходно" или "роскошно".'
+            'В тексте должно быть слово "превосходно" или "роскошно".',
         )
