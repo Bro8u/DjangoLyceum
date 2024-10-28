@@ -8,34 +8,34 @@ import catalog.models
 
 
 class ItemModelTest(TestCase):
-    @classmethod
-    def setUp(cls):
-        super().setUpClass()
 
-        cls.category = catalog.models.Category.objects.create(
+    def setUp(self):
+        self.category_one = catalog.models.Category.objects.create(
             name="Категория 1",
             slug="category-1",
             weight=150,
         )
-        cls.tag = catalog.models.Tag.objects.create(
+        self.tag_one = catalog.models.Tag.objects.create(
             is_published=True,
-            name="Текстовый тэг",
-            slug="test-tag-slug",
+            name="Тэг 1",
+            slug="tag-1",
         )
 
-    def test_unable_create_one_letter(self):
+        super(ItemModelTest, self).setUp()
+
+    def test_unable_create_text_without_key_words(self):
 
         item_count = catalog.models.Item.objects.count()
 
         with self.assertRaises(django.core.exceptions.ValidationError):
             self.item = catalog.models.Item(
                 name="Тестовый товар",
-                category=self.category,
-                text="1",
+                category=self.category_one,
+                text="без ключевого слова",
             )
             self.item.full_clean()
             self.item.save()
-            self.item.tags.add(ItemModelTest.tag)
+            self.item.tags.add(self.tag_one)
 
         self.assertEqual(
             catalog.models.Item.objects.count(),
@@ -46,12 +46,12 @@ class ItemModelTest(TestCase):
         item_count = catalog.models.Item.objects.count()
         self.item = catalog.models.Item(
             name="Тестовый товар",
-            category=self.category,
+            category=self.category_one,
             text="Роскошно!",
         )
         self.item.full_clean()
         self.item.save()
-        self.item.tags.add(ItemModelTest.tag)
+        self.item.tags.add(self.tag_one)
         self.assertEqual(
             catalog.models.Item.objects.count(),
             item_count + 1,
@@ -61,20 +61,22 @@ class ItemModelTest(TestCase):
 class TagModelTest(TestCase):
 
     def setUp(self):
-        self.tag = catalog.models.Tag.objects.create(
+        self.tag1 = catalog.models.Tag.objects.create(
             name="Тестовый тег",
             slug="test-tag-slug",
         )
 
+        super(TagModelTest, self).setUp()
+
     def test_tag_create(self):
         tags_count = catalog.models.Tag.objects.count()
 
-        self.tag1 = catalog.models.Tag(
-            name="Тестовый тег1",
-            slug="test-tag-slug1",
+        self.tag2 = catalog.models.Tag(
+            name="Тестовый тег2",
+            slug="test-tag-slug2",
         )
-        self.tag1.full_clean()
-        self.tag1.save()
+        self.tag2.full_clean()
+        self.tag2.save()
 
         self.assertEqual(
             catalog.models.Tag.objects.count(),
@@ -98,12 +100,12 @@ class TagModelTest(TestCase):
     def test_tag_permitted_symbols(self):
         tags_count = catalog.models.Tag.objects.count()
         with self.assertRaises(django.core.exceptions.ValidationError):
-            self.tag1 = catalog.models.Tag(
-                name="Тестовый тег дубликат",
+            self.tag2 = catalog.models.Tag(
+                name="тег 2",
                 slug="test-tag-slug#",
             )
-            self.tag1.full_clean()
-            self.tag1.save()
+            self.tag2.full_clean()
+            self.tag2.save()
         self.assertEqual(
             catalog.models.Tag.objects.count(),
             tags_count,
@@ -113,21 +115,23 @@ class TagModelTest(TestCase):
 class CategoryModelTest(TestCase):
 
     def setUp(self):
-        self.cat = catalog.models.Category.objects.create(
+        self.cat1 = catalog.models.Category.objects.create(
             name="Тестовая категория",
             slug="test-slug",
             weight=150,
         )
 
+        super(CategoryModelTest, self).setUp()
+
     def test_category_create(self):
         cats_count = catalog.models.Category.objects.count()
 
-        self.cat1 = catalog.models.Category(
-            name="Тестовая",
+        self.cat2 = catalog.models.Category(
+            name="Коша 2",
             slug="test-slug-new",
         )
-        self.cat1.full_clean()
-        self.cat1.save()
+        self.cat2.full_clean()
+        self.cat2.save()
 
         self.assertEqual(
             catalog.models.Category.objects.count(),
@@ -152,13 +156,13 @@ class CategoryModelTest(TestCase):
     def test_category_permitted_symbols(self):
         cats_count = catalog.models.Category.objects.count()
         with self.assertRaises(django.core.exceptions.ValidationError):
-            self.cat1 = catalog.models.Category(
-                name="Тестовая",
+            self.cat2 = catalog.models.Category(
+                name="Кошка 2",
                 slug="test-slug#",
                 weight=150,
             )
-            self.cat1.full_clean()
-            self.cat1.save()
+            self.cat2.full_clean()
+            self.cat2.save()
         self.assertEqual(
             catalog.models.Category.objects.count(),
             cats_count,

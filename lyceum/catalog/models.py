@@ -1,23 +1,8 @@
-import re
-
-from django.core import exceptions, validators
+from django.core import validators
 from django.db import models
 
+import catalog.validators
 from core.models import CommonFieldsModel
-
-
-def validate_text(value):
-    if not re.search(r"\b(превосход\w*|роскош\w*)\b", value, re.IGNORECASE):
-        raise exceptions.ValidationError(
-            'Текст должен содержать слово с корнем "превосход" или "роскош".',
-        )
-
-
-slug_validator = validators.RegexValidator(
-    regex=r"^[a-zA-Z0-9_-]+$",
-    message="Слаг может содержать только"
-    "латинские буквы, цифры, дефисы и подчёркивания.",
-)
 
 
 class Tag(CommonFieldsModel):
@@ -25,8 +10,6 @@ class Tag(CommonFieldsModel):
         max_length=200,
         unique=True,
         verbose_name="слаг",
-        validators=[slug_validator],
-        help_text="Только цифры, латинские буквы, символы '-' и '_'.",
     )
 
     class Meta:
@@ -42,17 +25,15 @@ class Category(CommonFieldsModel):
         max_length=200,
         unique=True,
         verbose_name="слаг",
-        validators=[slug_validator],
-        help_text="Только цифры, латинские буквы, символы '-' и '_'.",
     )
-    weight = models.IntegerField(
+    weight = models.PositiveSmallIntegerField(
         default=100,
         verbose_name="вес",
         validators=[
-            validators.MinValueValidator(0),
+            validators.MinValueValidator(1),
             validators.MaxValueValidator(32767),
         ],
-        help_text="Введите целое число от 0 до 32767",
+        help_text="Введите целое число от 1 до 32766",
     )
 
     class Meta:
@@ -65,7 +46,7 @@ class Category(CommonFieldsModel):
 
 class Item(CommonFieldsModel):
     text = models.TextField(
-        validators=[validate_text],
+        validators=[catalog.validators.validate_text],
         verbose_name="Текст",
         help_text="Введите полное описание товара.",
     )
