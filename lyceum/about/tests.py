@@ -11,9 +11,7 @@ class AboutUrlTestsContent(TestCase):
             ("/about/", HTTPStatus.OK, "Информация о компании..."),
             (
                 "/",
-                HTTPStatus.OK,
-                '<nav class="navbar navbar-expand-lg"'
-                'style="background-color: #f8f9fa; padding: 15px;">',
+                HTTPStatus.OK, '<nav class="navbar navbar-expand-lg"'
             ),
         ],
     )

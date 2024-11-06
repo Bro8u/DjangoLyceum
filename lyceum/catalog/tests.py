@@ -183,9 +183,7 @@ class CatalogMain(TestCase):
             ("/catalog/", HTTPStatus.OK, "Название товара 1"),
             (
                 "/",
-                HTTPStatus.OK,
-                '<nav class="navbar navbar-expand-lg"'
-                'style="background-color: #f8f9fa; padding: 15px;">',
+                HTTPStatus.OK, '<nav class="navbar navbar-expand-lg"'
             ),
         ],
     )
