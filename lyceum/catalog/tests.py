@@ -20,7 +20,6 @@ class ItemModelTest(TestCase):
             name="Тэг 1",
             slug="tag-1",
         )
-
         super(ItemModelTest, self).setUp()
 
     def test_unable_create_text_without_key_words(self):
@@ -41,6 +40,12 @@ class ItemModelTest(TestCase):
             catalog.models.Item.objects.count(),
             item_count,
         )
+
+    # def tearDown(self):
+    #     catalog.models.Item.objects.all().delete()
+    #     catalog.models.Tag.objects.all().delete()
+    #     catalog.models.Category.objects.all().delete()
+    #     super().tearDown()
 
     def test_create(self):
         item_count = catalog.models.Item.objects.count()
@@ -173,7 +178,15 @@ class CatalogMain(TestCase):
 
     @parameterized.expand(
         [
-            ("/catalog/", HTTPStatus.OK, "Список элементов"),
+            ("/catalog/", HTTPStatus.OK, "Список товаров"),
+            ("/catalog/", HTTPStatus.OK, "/static/images/picture.png"),
+            ("/catalog/", HTTPStatus.OK, "Название товара 1"),
+            (
+                "/",
+                HTTPStatus.OK,
+                '<nav class="navbar navbar-expand-lg"'
+                'style="background-color: #f8f9fa; padding: 15px;">',
+            ),
         ],
     )
     def test_status_and_content(
@@ -189,12 +202,28 @@ class CatalogMain(TestCase):
             status_code=expected_status,
         )
 
+    @parameterized.expand(
+        [
+            ("/catalog/",),
+        ],
+    )
+    def test_rendered_file(
+        self,
+        url,
+    ):
+        response = Client().get(url)
+        self.assertTemplateUsed(
+            response,
+            "catalog/item_list.html",
+        )
+
 
 class CatalogID(TestCase):
 
     @parameterized.expand(
         [
-            ("/catalog/5/", HTTPStatus.OK, f"Подробно элемент {5}"),
+            ("/catalog/0/", HTTPStatus.OK, "Пример товара"),
+            ("/catalog/0/", HTTPStatus.OK, '<div class="card-body">'),
         ],
     )
     def test_status_and_content(
@@ -204,10 +233,26 @@ class CatalogID(TestCase):
         expected_content,
     ):
         response = Client().get(url)
+        print(response.content.decode("utf-8"))
         self.assertContains(
             response,
             expected_content,
             status_code=expected_status,
+        )
+
+    @parameterized.expand(
+        [
+            ("/catalog/0/",),
+        ],
+    )
+    def test_rendered_file(
+        self,
+        url,
+    ):
+        response = Client().get(url)
+        self.assertTemplateUsed(
+            response,
+            "catalog/item.html",
         )
 
 

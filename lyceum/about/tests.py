@@ -4,10 +4,17 @@ from django.test import Client, TestCase
 from parameterized import parameterized
 
 
-class CatalogUrlTests(TestCase):
+class AboutUrlTestsContent(TestCase):
     @parameterized.expand(
         [
-            ("/about/", HTTPStatus.OK, "О проекте"),
+            ("/about/", HTTPStatus.OK, "О нас"),
+            ("/about/", HTTPStatus.OK, "Информация о компании..."),
+            (
+                "/",
+                HTTPStatus.OK,
+                '<nav class="navbar navbar-expand-lg"'
+                'style="background-color: #f8f9fa; padding: 15px;">',
+            ),
         ],
     )
     def test_status_and_content(

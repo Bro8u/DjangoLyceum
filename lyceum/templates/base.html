@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    {% load static %}
+    <title>
+      {% block title %}
+        Название
+      {% endblock %}
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'images/favicon/favicon-96x96.png' %}">
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon/favicon.svg' %}">
+    <link rel="shortcut icon" href="{% static 'images/favicon/favicon.ico' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon/apple-touch-icon.png' %}">
+    <link rel="manifest" href="{% static 'images/favicon/site.webmanifest' %}">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  </head>
+  <body>
+    {% include 'includes/header.html' %}
+    <main class="pt-5 my-5">
+      {% block content %}
+        Контент не подвезли :( тут можно просить картинку енотика
+        <a href="{% url 'item_detail' 0 %}">
+          <img src="{% static 'images/picture.png' %}" class="img-fluid" alt="Описание картинки" />
+        </a>
+      {% endblock %}
+    </main>
+    {% include 'includes/footer.html' %}
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </body>
+</html>

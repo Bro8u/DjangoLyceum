@@ -104,3 +104,6 @@
     ```bash
     python3 manage.py runserver
     ```
+- **Для просмотора связей моделей проекта откройте файл ER-diagramma.jpg в корне проекта:**
+
+

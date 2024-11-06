@@ -1,12 +1,78 @@
 [
 {
-  "model": "catalog.item",
+  "model": "catalog.tag",
   "pk": 1,
   "fields": {
+    "name": "didgital",
     "is_published": true,
-    "name": "n1",
+    "slug": "expensive"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 4,
+  "fields": {
+    "name": "smart",
+    "is_published": true,
+    "slug": "nice"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 5,
+  "fields": {
+    "name": "expensive",
+    "is_published": true,
+    "slug": "expensive_and_nice"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 6,
+  "fields": {
+    "name": "common",
+    "is_published": true,
+    "slug": "common"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 7,
+  "fields": {
+    "name": "user_love",
+    "is_published": true,
+    "slug": "user_love"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 1,
+  "fields": {
+    "name": "electronics",
+    "is_published": true,
+    "slug": "expensive",
+    "weight": 100
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 2,
+  "fields": {
+    "name": "home",
+    "is_published": true,
+    "slug": "nice",
+    "weight": 100
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 3,
+  "fields": {
+    "name": "iphone12",
+    "is_published": true,
     "text": "роскошно",
     "category": 1,
+    "on_main": true,
     "tags": [
       1
     ]
@@ -14,120 +80,123 @@
 },
 {
   "model": "catalog.item",
-  "pk": 2,
-  "fields": {
-    "is_published": true,
-    "name": "n2",
-    "text": "роскошно",
-    "category": 2,
-    "tags": [
-      2
-    ]
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 3,
-  "fields": {
-    "is_published": true,
-    "name": "n3",
-    "text": "роскошно",
-    "category": 1,
-    "tags": [
-      3
-    ]
-  }
-},
-{
-  "model": "catalog.item",
   "pk": 4,
   "fields": {
+    "name": "iPhone 16 pro max",
     "is_published": true,
-    "name": "n4",
-    "text": "превосходно",
+    "text": "роскошно",
     "category": 1,
+    "on_main": true,
     "tags": [
-      4
-    ]
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 5,
-  "fields": {
-    "is_published": true,
-    "name": "n5",
-    "text": "превосходно",
-    "category": 1,
-    "tags": [
-      3,
       5
     ]
   }
 },
 {
-  "model": "catalog.tag",
-  "pk": 1,
-  "fields": {
-    "is_published": true,
-    "name": "1",
-    "slug": "1"
-  }
-},
-{
-  "model": "catalog.tag",
-  "pk": 2,
-  "fields": {
-    "is_published": true,
-    "name": "2",
-    "slug": "2"
-  }
-},
-{
-  "model": "catalog.tag",
-  "pk": 3,
-  "fields": {
-    "is_published": true,
-    "name": "3",
-    "slug": "3"
-  }
-},
-{
-  "model": "catalog.tag",
-  "pk": 4,
-  "fields": {
-    "is_published": true,
-    "name": "4",
-    "slug": "4"
-  }
-},
-{
-  "model": "catalog.tag",
+  "model": "catalog.item",
   "pk": 5,
   "fields": {
+    "name": "iPhone 15",
     "is_published": true,
-    "name": "5",
-    "slug": "5"
+    "text": "превосходно",
+    "category": 2,
+    "on_main": true,
+    "tags": [
+      6
+    ]
   }
 },
 {
-  "model": "catalog.category",
-  "pk": 1,
+  "model": "catalog.item",
+  "pk": 6,
   "fields": {
+    "name": "iPhone 11",
     "is_published": true,
-    "name": "asdf",
-    "slug": "asdf",
-    "weight": 100
+    "text": "превосходно",
+    "category": 1,
+    "on_main": true,
+    "tags": [
+      7
+    ]
   }
 },
 {
-  "model": "catalog.category",
-  "pk": 2,
+  "model": "catalog.item",
+  "pk": 7,
   "fields": {
+    "name": "iPhone 7 max",
     "is_published": true,
-    "name": "asdf2",
-    "slug": "asdf2",
-    "weight": 100
+    "text": "превосходно",
+    "category": 1,
+    "on_main": true,
+    "tags": [
+      1,
+      7
+    ]
+  }
+},
+{
+  "model": "catalog.mainimage",
+  "pk": 4,
+  "fields": {
+    "image": "items/iphone12.jpeg",
+    "item": 3
+  }
+},
+{
+  "model": "catalog.mainimage",
+  "pk": 5,
+  "fields": {
+    "image": "items/iphone16main.jpeg",
+    "item": 4
+  }
+},
+{
+  "model": "catalog.mainimage",
+  "pk": 6,
+  "fields": {
+    "image": "items/iphone15main.jpeg",
+    "item": 5
+  }
+},
+{
+  "model": "catalog.mainimage",
+  "pk": 7,
+  "fields": {
+    "image": "items/iphone-11.jpg",
+    "item": 6
+  }
+},
+{
+  "model": "catalog.mainimage",
+  "pk": 8,
+  "fields": {
+    "image": "items/iphone7main.jpeg",
+    "item": 7
+  }
+},
+{
+  "model": "catalog.image",
+  "pk": 3,
+  "fields": {
+    "image": "items/iphone12_camera.jpeg",
+    "item": 3
+  }
+},
+{
+  "model": "catalog.image",
+  "pk": 4,
+  "fields": {
+    "image": "items/iphone11_campera.jpg",
+    "item": 6
+  }
+},
+{
+  "model": "catalog.image",
+  "pk": 5,
+  "fields": {
+    "image": "items/iphone7_all_sides.jpeg",
+    "item": 7
   }
 }
 ]
