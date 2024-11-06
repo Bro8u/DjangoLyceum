@@ -22,10 +22,7 @@ class HomepageUrlTests(TestCase):
             ("/", HTTPStatus.OK, 'img src="/static/images/picture.png"'),
             ("/", HTTPStatus.OK, 'img src="/static/images/logo.png"'),
             ("/", HTTPStatus.OK, 'img src="/static/images/logo.png"'),
-            (
-                "/",
-                HTTPStatus.OK, '<nav class="navbar navbar-expand-lg"'
-            ),
+            ("/", HTTPStatus.OK, '<nav class="navbar navbar-expand-lg"'),
         ],
     )
     def test_status_and_content(

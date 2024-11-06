@@ -9,10 +9,7 @@ class AboutUrlTestsContent(TestCase):
         [
             ("/about/", HTTPStatus.OK, "О нас"),
             ("/about/", HTTPStatus.OK, "Информация о компании..."),
-            (
-                "/",
-                HTTPStatus.OK, '<nav class="navbar navbar-expand-lg"'
-            ),
+            ("/", HTTPStatus.OK, '<nav class="navbar navbar-expand-lg"'),
         ],
     )
     def test_status_and_content(

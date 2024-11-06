@@ -181,10 +181,7 @@ class CatalogMain(TestCase):
             ("/catalog/", HTTPStatus.OK, "Список товаров"),
             ("/catalog/", HTTPStatus.OK, "/static/images/picture.png"),
             ("/catalog/", HTTPStatus.OK, "Название товара 1"),
-            (
-                "/",
-                HTTPStatus.OK, '<nav class="navbar navbar-expand-lg"'
-            ),
+            ("/", HTTPStatus.OK, '<nav class="navbar navbar-expand-lg"'),
         ],
     )
     def test_status_and_content(
