@@ -1,6 +1,9 @@
 from django.db import models
 
 
+__all__ = ["CommonFieldsModel"]
+
+
 class CommonFieldsModel(models.Model):
     name = models.CharField(
         max_length=150,

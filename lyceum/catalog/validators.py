@@ -3,6 +3,9 @@ import re
 from django.core.exceptions import ValidationError
 
 
+__all__ = ["validate_text"]
+
+
 WORDS_REGEX = re.compile(r"\w+|\W+")
 
 

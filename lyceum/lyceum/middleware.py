@@ -3,6 +3,9 @@ import re
 from django.conf import settings
 
 
+__all__ = ["ReverseWordsMiddleware", "reverse_word", "reverse_cyrillic_words"]
+
+
 class ReverseWordsMiddleware:
     count_responses = 0
 

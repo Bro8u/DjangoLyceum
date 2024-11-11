@@ -7,6 +7,9 @@ import catalog.validators
 from core.models import CommonFieldsModel
 
 
+__all__ = ["Item", "Category", "Tag", "MainImage", "Image", "BaseImage"]
+
+
 class Tag(CommonFieldsModel):
     slug = models.SlugField(
         max_length=200,
@@ -57,6 +60,9 @@ class Item(CommonFieldsModel):
         on_delete=models.CASCADE,
     )
     tags = models.ManyToManyField(Tag)
+    on_main = models.BooleanField(
+        default=True,
+    )
 
     class Meta:
         verbose_name = "товар"
@@ -68,7 +74,6 @@ class Item(CommonFieldsModel):
     def image_tmb(self):
         if self.main_image.image:
             thumbnail = self.main_image.get_image_50x50
-            print(thumbnail.url)
             return django.utils.safestring.mark_safe(
                 f'<img src="{thumbnail.url}">'
             )

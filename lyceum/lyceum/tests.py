@@ -7,7 +7,44 @@ from parameterized import parameterized
 from lyceum.middleware import reverse_cyrillic_words
 
 
+__all__ = ["TestReverseCyrillicWords"]
+
+
 class TestMiddlewareReverse(TestCase):
+    @parameterized.expand(
+        [
+            ("/", HTTPStatus.OK, "Главная", "яанвалГ"),
+            (
+                "/",
+                HTTPStatus.OK,
+                "Контент не подвезли :( тут можно просить картинку енотика",
+                "тнетноК ен илзевдоп :( тут онжом ьтисорп укнитрак акитоне",
+            ),
+        ],
+    )
+    @override_settings(ALLOW_REVERSE=True)
+    def test_middleware_reverse_on(
+        self,
+        url,
+        expected_status,
+        expected_content_1,
+        expected_content_2,
+    ):
+        client = Client()
+        for response_number in range(1, 11):
+            response = client.get(url)
+            if response_number % 10 == 0:
+                self.assertContains(
+                    response,
+                    expected_content_2,
+                    status_code=expected_status,
+                )
+            else:
+                self.assertContains(
+                    response,
+                    expected_content_1,
+                    status_code=expected_status,
+                )
 
     @parameterized.expand(
         [

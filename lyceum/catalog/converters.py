@@ -1,3 +1,6 @@
+__all__ = ["DigitConverter"]
+
+
 class DigitConverter:
     regex = r"0*[1-9]{1,}\d*"
 

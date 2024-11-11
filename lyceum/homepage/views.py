@@ -6,11 +6,13 @@ from django.shortcuts import render
 from catalog.models import Item
 
 
+__all__ = ["home", "coffee"]
+
+
 def home(request):
     template = "homepage/home.html"
     all_items = Item.objects.all()
     return render(request, template, {"all_items": all_items})
-    # return HttpResponse("<body>Главная</body>")
 
 
 def coffee(request):

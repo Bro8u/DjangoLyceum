@@ -157,3 +157,6 @@ cython_debug/
 
 ## File-based project format:
 *.iws
+
+# Cached media files
+lyceum/media/cache/

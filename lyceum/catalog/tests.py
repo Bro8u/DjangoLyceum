@@ -6,6 +6,8 @@ from parameterized import parameterized
 
 import catalog.models
 
+__all__ = []
+
 
 class ItemModelTest(TestCase):
 
@@ -41,11 +43,11 @@ class ItemModelTest(TestCase):
             item_count,
         )
 
-    # def tearDown(self):
-    #     catalog.models.Item.objects.all().delete()
-    #     catalog.models.Tag.objects.all().delete()
-    #     catalog.models.Category.objects.all().delete()
-    #     super().tearDown()
+    def tearDown(self):
+        catalog.models.Item.objects.all().delete()
+        catalog.models.Tag.objects.all().delete()
+        catalog.models.Category.objects.all().delete()
+        super().tearDown()
 
     def test_create(self):
         item_count = catalog.models.Item.objects.count()
@@ -228,7 +230,6 @@ class CatalogID(TestCase):
         expected_content,
     ):
         response = Client().get(url)
-        print(response.content.decode("utf-8"))
         self.assertContains(
             response,
             expected_content,

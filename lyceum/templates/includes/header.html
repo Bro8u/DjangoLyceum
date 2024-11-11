@@ -8,18 +8,18 @@
   </style>
   <nav class="navbar navbar-expand-lg" style="background-color: #f8f9fa; padding: 15px;">
     <div class="container">
-      <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" alt="Логотип" style="width: 40px; height: 40px;" /></a>
+      <a class="navbar-brand" href="{% url 'homepage:homepage' %}"><img src="{% static 'images/logo.png' %}" alt="Логотип" style="width: 40px; height: 40px;" /></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto" style="font-size: 1.1em;">
           <li class="nav-item">
-            <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}" style="color: #555;">На главную</a>
+            <a class="nav-link {% if request.resolver_match.view_name == 'homepage:homepage' %}active{% endif %}" href="{% url 'homepage:homepage' %}" style="color: #555;">На главную</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}" style="color: #555;">О проекте</a>
+            <a class="nav-link {% if request.resolver_match.view_name == 'about:about' %}active{% endif %}" href="{% url 'about:about' %}" style="color: #555;">О проекте</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if request.resolver_match.url_name == 'item_list' %}active{% endif %}" href="{% url 'item_list' %}" style="color: #555;">Список товаров</a>
+            <a class="nav-link {% if request.resolver_match.view_name == 'catalog:item_list' %}active{% endif %}" href="{% url 'catalog:item_list' %}" style="color: #555;">Список товаров</a>
           </li>
         </ul>
       </div>

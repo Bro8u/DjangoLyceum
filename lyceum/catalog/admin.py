@@ -5,6 +5,9 @@ import sorl.thumbnail
 import catalog.models
 
 
+__all__ = ["CatalogItemAdmin", "ImageInline", "MainImageInline"]
+
+
 class MainImageInline(admin.StackedInline):
     model = catalog.models.MainImage
     fields = (
@@ -16,7 +19,10 @@ class MainImageInline(admin.StackedInline):
     def image_tag(self, obj):
         if obj.id and obj.image:
             thumb = sorl.thumbnail.get_thumbnail(
-                obj.image, "150x150", crop="center", quality=80
+                obj.image,
+                "150x150",
+                crop="center",
+                quality=80,
             )
             return html.format_html('<img src="{}" />', thumb.url)
         else:
@@ -36,9 +42,15 @@ class ImageInline(admin.TabularInline):
     def image_tag(self, obj):
         if obj.id and obj.image:
             thumb = sorl.thumbnail.get_thumbnail(
-                obj.image, "100x100", crop="center", quality=80
+                obj.image,
+                "100x100",
+                crop="center",
+                quality=80,
             )
-            return html.format_html('<img src="{}" />', thumb.url)
+            return html.format_html(
+                '<img src="{}" />',
+                thumb.url,
+            )
         else:
             return "Нет изображения"
 

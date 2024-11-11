@@ -4,6 +4,8 @@ from catalog import converters, views
 
 register_converter(converters.DigitConverter, "custom_converter")
 
+app_name = "catalog"
+
 urlpatterns = [
     path("", views.item_list, name="item_list"),
     path("<int:id>/", views.item_detail, name="item_detail"),

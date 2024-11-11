@@ -4,6 +4,9 @@ from django.test import Client, TestCase
 from parameterized import parameterized
 
 
+__all__ = []
+
+
 class HomepageUrlTests(TestCase):
     @parameterized.expand(
         [
