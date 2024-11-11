@@ -75,7 +75,7 @@ class Item(CommonFieldsModel):
         if self.main_image.image:
             thumbnail = self.main_image.get_image_50x50
             return django.utils.safestring.mark_safe(
-                f'<img src="{thumbnail.url}">'
+                f'<img src="{thumbnail.url}">',
             )
         return "Нет изображения"
 

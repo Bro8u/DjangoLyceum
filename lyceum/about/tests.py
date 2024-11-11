@@ -1,6 +1,7 @@
 from http import HTTPStatus
 
 from django.test import Client, TestCase
+from django.urls import reverse
 from parameterized import parameterized
 
 __all__ = []
@@ -10,6 +11,7 @@ class AboutUrlTestsContent(TestCase):
     @parameterized.expand(
         [
             ("/about/", HTTPStatus.OK, "О нас"),
+            (reverse("about:about"), HTTPStatus.OK, "О нас"),
             ("/about/", HTTPStatus.OK, "Информация о компании..."),
             ("/", HTTPStatus.OK, '<nav class="navbar navbar-expand-lg"'),
         ],

@@ -1,6 +1,7 @@
 from http import HTTPStatus
 
 from django.test import Client, TestCase
+from django.urls import reverse
 from parameterized import parameterized
 
 
@@ -11,6 +12,7 @@ class HomepageUrlTests(TestCase):
     @parameterized.expand(
         [
             ("/"),
+            (reverse("homepage:homepage")),
         ],
     )
     def test_rendered_file(
@@ -23,6 +25,11 @@ class HomepageUrlTests(TestCase):
     @parameterized.expand(
         [
             ("/", HTTPStatus.OK, 'img src="/static/images/picture.png"'),
+            (
+                reverse("homepage:homepage"),
+                HTTPStatus.OK,
+                'img src="/static/images/picture.png"',
+            ),
             ("/", HTTPStatus.OK, 'img src="/static/images/logo.png"'),
             ("/", HTTPStatus.OK, 'img src="/static/images/logo.png"'),
             ("/", HTTPStatus.OK, '<nav class="navbar navbar-expand-lg"'),
@@ -46,6 +53,7 @@ class CoffeeUrlContentTest(TestCase):
     @parameterized.expand(
         [
             ("/coffee/", HTTPStatus.IM_A_TEAPOT, "Я чайник"),
+            (reverse("homepage:coffee"), HTTPStatus.IM_A_TEAPOT, "Я чайник"),
         ],
     )
     def test_status_and_content(

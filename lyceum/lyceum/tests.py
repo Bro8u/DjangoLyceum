@@ -2,6 +2,7 @@ from http import HTTPStatus
 import unittest
 
 from django.test import Client, override_settings, TestCase
+from django.urls import reverse
 from parameterized import parameterized
 
 from lyceum.middleware import reverse_cyrillic_words
@@ -14,6 +15,12 @@ class TestMiddlewareReverse(TestCase):
     @parameterized.expand(
         [
             ("/", HTTPStatus.OK, "Главная", "яанвалГ"),
+            (
+                reverse("homepage:homepage"),
+                HTTPStatus.OK,
+                "Главная",
+                "яанвалГ",
+            ),
             (
                 "/",
                 HTTPStatus.OK,
@@ -48,6 +55,7 @@ class TestMiddlewareReverse(TestCase):
 
     @parameterized.expand(
         [
+            (reverse("homepage:homepage"), HTTPStatus.OK, "Главная"),
             (
                 "/",
                 HTTPStatus.OK,

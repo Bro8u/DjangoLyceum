@@ -8,7 +8,7 @@ app_name = "catalog"
 
 urlpatterns = [
     path("", views.item_list, name="item_list"),
-    path("<int:id>/", views.item_detail, name="item_detail"),
+    path("<int:item_id>/", views.item_detail, name="item_detail"),
     re_path(
         r"^re/(?P<number>0*[1-9]{1,}\d*)/$",
         views.converter_and_reqular_expression,

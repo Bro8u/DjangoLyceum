@@ -2,6 +2,7 @@ from http import HTTPStatus
 
 import django.core.exceptions
 from django.test import Client, TestCase
+from django.urls import reverse
 from parameterized import parameterized
 
 import catalog.models
@@ -181,9 +182,14 @@ class CatalogMain(TestCase):
     @parameterized.expand(
         [
             ("/catalog/", HTTPStatus.OK, "Список товаров"),
+            (reverse("catalog:item_list"), HTTPStatus.OK, "Список товаров"),
             ("/catalog/", HTTPStatus.OK, "/static/images/picture.png"),
             ("/catalog/", HTTPStatus.OK, "Название товара 1"),
-            ("/", HTTPStatus.OK, '<nav class="navbar navbar-expand-lg"'),
+            (
+                "/catalog/",
+                HTTPStatus.OK,
+                '<nav class="navbar navbar-expand-lg"',
+            ),
         ],
     )
     def test_status_and_content(
@@ -202,6 +208,7 @@ class CatalogMain(TestCase):
     @parameterized.expand(
         [
             ("/catalog/",),
+            (reverse("catalog:item_list")),
         ],
     )
     def test_rendered_file(
@@ -221,6 +228,11 @@ class CatalogID(TestCase):
         [
             ("/catalog/0/", HTTPStatus.OK, "Пример товара"),
             ("/catalog/0/", HTTPStatus.OK, '<div class="card-body">'),
+            (
+                reverse("catalog:item_detail", args=[0]),
+                HTTPStatus.OK,
+                '<div class="card-body">',
+            ),
         ],
     )
     def test_status_and_content(
@@ -239,6 +251,7 @@ class CatalogID(TestCase):
     @parameterized.expand(
         [
             ("/catalog/0/",),
+            (reverse("catalog:item_detail", args=[0])),
         ],
     )
     def test_rendered_file(
@@ -257,6 +270,11 @@ class CatalogRegularExpression(TestCase):
     @parameterized.expand(
         [
             ("/catalog/re/123/", HTTPStatus.OK, "123"),
+            (
+                reverse("catalog:reqular_expression", args=[123]),
+                HTTPStatus.OK,
+                "123",
+            ),
         ],
     )
     def test_status_and_content(
@@ -296,6 +314,7 @@ class CatalogConverter(TestCase):
     @parameterized.expand(
         [
             ("/catalog/converter/123/", HTTPStatus.OK, "123"),
+            (reverse("catalog:converter", args=[123]), HTTPStatus.OK, "123"),
         ],
     )
     def test_status_and_content(

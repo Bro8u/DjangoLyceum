@@ -11,9 +11,10 @@ def item_list(request):
     return render(request, template, context)
 
 
-def item_detail(request, id):
+def item_detail(request, item_id):
     template = "catalog/item.html"
-    return render(request, template, {"id": id})
+    context = {"item_id": item_id}
+    return render(request, template, context)
 
 
 def converter_and_reqular_expression(request, number):
