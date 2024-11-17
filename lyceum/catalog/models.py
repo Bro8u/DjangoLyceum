@@ -48,8 +48,51 @@ class Category(CommonFieldsModel):
     def __str__(self):
         return self.name
 
+class ItemManager(django.db.models.Manager):
+    def on_main(self):
+        return (
+            self.published()
+            .filter(
+                is_on_main=True,
+            )
+            .order_by(
+                Item.name.field.name,
+            )
+        )
+    
+    def published(self):
+        return (self.get_queryset()
+            .filter(
+                is_published=True,
+                category__is_published=True,
+            )
+            .order_by(
+                f"{Item.category.field.name}__{Category.name.field.name}",
+            )
+            .select_related(
+                Item.category.field.name,
+                Item.main_image.related.name,
+            )
+            .prefetch_related(
+                django.db.models.Prefetch(
+                    Item.tags.field.name,
+                    queryset=Tag.objects.only(
+                        Tag.name.field.name,
+                    ),
+                )
+            )
+            .only(
+                Item.name.field.name,
+                Item.text.field.name,
+                Item.main_image.related.name,
+                f"{Item.category.field.name}__{Category.name.field.name}",
+                f"{Item.tags.field.name}__{Tag.name.field.name}",
+            )
+        )
+    
 
 class Item(CommonFieldsModel):
+    objects=ItemManager()
     text = models.TextField(
         validators=[catalog.validators.validate_text],
         verbose_name="Текст",
@@ -60,9 +103,11 @@ class Item(CommonFieldsModel):
         on_delete=models.CASCADE,
     )
     tags = models.ManyToManyField(Tag)
-    on_main = models.BooleanField(
-        default=True,
+    is_on_main = models.BooleanField(
+        default=False,
     )
+
+    
 
     class Meta:
         verbose_name = "товар"

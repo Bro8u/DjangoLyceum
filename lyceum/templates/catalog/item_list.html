@@ -6,11 +6,9 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Список товаров</h1>
-  <div class="my-4">
-    <a href="{% url 'catalog:item_detail' 0 %}">
-      <img src="{% static 'images/picture.png' %}" class="img-fluid" alt="Картинка товара 1" />
-      <h5>Название товара 1</h5>
-    </a>
-  </div>
+
+    {% for item in items%}
+        {% include "includes/item_card.html" %}
+    {%endfor%}
+
 {% endblock %}

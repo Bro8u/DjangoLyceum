@@ -4,6 +4,8 @@ from django.test import Client, TestCase
 from django.urls import reverse
 from parameterized import parameterized
 
+import catalog.models
+
 
 __all__ = []
 
@@ -24,11 +26,10 @@ class HomepageUrlTests(TestCase):
 
     @parameterized.expand(
         [
-            ("/", HTTPStatus.OK, 'img src="/static/images/picture.png"'),
             (
                 reverse("homepage:homepage"),
                 HTTPStatus.OK,
-                'img src="/static/images/picture.png"',
+                'img src="/static/images/logo.png"',
             ),
             ("/", HTTPStatus.OK, 'img src="/static/images/logo.png"'),
             ("/", HTTPStatus.OK, 'img src="/static/images/logo.png"'),
@@ -68,3 +69,56 @@ class CoffeeUrlContentTest(TestCase):
             expected_content,
             status_code=expected_status,
         )
+        
+class Checker(TestCase):
+    def check(
+        self,
+        item,
+        exist,
+        prefetched,
+        not_loaded,
+    ):
+        item_dict = item.__dict__
+        for value in exist:
+            self.assertIn(value, item_dict)
+        for value in prefetched:
+            self.assertIn(value, item_dict['_prefetched_objects_cache'])
+        for value in not_loaded:
+            self.assertNotIn(value, item_dict)
+
+class ItemMainContext(Checker):
+    fixtures = ["data.json"]
+
+    def test_type(self):
+        response = Client().get("/")
+        for item in response.context["items"]:
+            self.assertIsInstance(item, catalog.models.Item)
+    
+    def test_item_size(self):
+        response = Client().get("/")
+        self.assertEqual(len(response.context["items"]), 0)
+
+    def test_loaded_value(self):
+        response = Client().get("/")
+        for item in response.context["items"]:
+            self.check(
+                item,
+                (
+                    "name",
+                    "text",
+                    "category_id",
+                ),
+                ("tags",),
+                (
+                    "is_on_main",
+                    "image",
+                    "is_published",
+                )
+            )
+            
+            self.check(
+                item.tags.all()[0],
+                ("name",),
+                (),
+                ("is_published"),
+            )

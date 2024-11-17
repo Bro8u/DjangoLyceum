@@ -1,1 +1,6 @@
 {% extends "base.html" %}
+{% block content%}
+    {% for item in items%}
+        {% include "includes/item_card.html" %}
+    {%endfor%}
+{% endblock%}

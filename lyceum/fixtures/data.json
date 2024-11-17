@@ -72,7 +72,7 @@
         "is_published": true,
         "text": "роскошно",
         "category": 3,
-        "on_main": true,
+        "is_on_main": false,
         "tags": [
             8
         ]
@@ -86,7 +86,7 @@
         "is_published": true,
         "text": "роскошно",
         "category": 4,
-        "on_main": true,
+        "is_on_main": false,
         "tags": [
             9,
             12
@@ -101,7 +101,7 @@
         "is_published": true,
         "text": "роскошно",
         "category": 3,
-        "on_main": true,
+        "is_on_main": false,
         "tags": [
             8,
             10,
@@ -117,7 +117,7 @@
         "is_published": true,
         "text": "роскошно",
         "category": 4,
-        "on_main": true,
+        "is_on_main": false,
         "tags": [
             9,
             10,
@@ -133,7 +133,7 @@
         "is_published": true,
         "text": "роскошно",
         "category": 3,
-        "on_main": true,
+        "is_on_main": false,
         "tags": [
             9,
             11
@@ -201,6 +201,14 @@
     "pk": 6,
     "fields": {
         "image": "items/iphone7_all_sides_oyK9vqM.jpeg",
+        "item": 10
+    }
+},
+{
+    "model": "catalog.image",
+    "pk": 7,
+    "fields": {
+        "image": "items/iphone7_all_sides_6JaKDyB.jpeg",
         "item": 10
     }
 }

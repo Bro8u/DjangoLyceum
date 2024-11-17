@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.utils import html
-import sorl.thumbnail
 
 import catalog.models
 
@@ -16,15 +15,11 @@ class MainImageInline(admin.StackedInline):
     )
     readonly_fields = ("image_tag",)
 
-    def image_tag(self, obj):
+    def image_tag(self, obj: catalog.models.Image):
         if obj.id and obj.image:
-            thumb = sorl.thumbnail.get_thumbnail(
-                obj.image,
-                "150x150",
-                crop="center",
-                quality=80,
+            return html.format_html(
+                '<img src="{}" />', obj.get_image_300x300().url
             )
-            return html.format_html('<img src="{}" />', thumb.url)
         else:
             return "Нет изображения"
 
@@ -39,17 +34,11 @@ class ImageInline(admin.TabularInline):
     )
     readonly_fields = ("image_tag",)
 
-    def image_tag(self, obj):
+    def image_tag(self, obj: catalog.models.Image):
         if obj.id and obj.image:
-            thumb = sorl.thumbnail.get_thumbnail(
-                obj.image,
-                "100x100",
-                crop="center",
-                quality=80,
-            )
             return html.format_html(
                 '<img src="{}" />',
-                thumb.url,
+                obj.get_image_300x300().url,
             )
         else:
             return "Нет изображения"

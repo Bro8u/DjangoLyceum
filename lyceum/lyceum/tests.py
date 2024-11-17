@@ -14,18 +14,12 @@ __all__ = ["TestReverseCyrillicWords"]
 class TestMiddlewareReverse(TestCase):
     @parameterized.expand(
         [
-            ("/", HTTPStatus.OK, "Главная", "яанвалГ"),
+            ("/coffee/", HTTPStatus.IM_A_TEAPOT, "Я чайник", "Я кинйач"),
             (
-                reverse("homepage:homepage"),
-                HTTPStatus.OK,
-                "Главная",
-                "яанвалГ",
-            ),
-            (
-                "/",
-                HTTPStatus.OK,
-                "Контент не подвезли :( тут можно просить картинку енотика",
-                "тнетноК ен илзевдоп :( тут онжом ьтисорп укнитрак акитоне",
+                reverse("homepage:coffee"),
+                HTTPStatus.IM_A_TEAPOT,
+                "Я чайник",
+                "Я кинйач",
             ),
         ],
     )
@@ -55,11 +49,11 @@ class TestMiddlewareReverse(TestCase):
 
     @parameterized.expand(
         [
-            (reverse("homepage:homepage"), HTTPStatus.OK, "Главная"),
+            (reverse("homepage:coffee"), HTTPStatus.IM_A_TEAPOT, "Я чайник"),
             (
-                "/",
-                HTTPStatus.OK,
-                "Контент не подвезли :( тут можно просить картинку енотика",
+                "/coffee/",
+                HTTPStatus.IM_A_TEAPOT,
+                "Я чайник",
             ),
         ],
     )

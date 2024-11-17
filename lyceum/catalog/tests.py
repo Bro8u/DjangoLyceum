@@ -178,172 +178,123 @@ class CategoryModelTest(TestCase):
 
 
 class CatalogMain(TestCase):
-
     @parameterized.expand(
         [
-            ("/catalog/", HTTPStatus.OK, "Список товаров"),
-            (reverse("catalog:item_list"), HTTPStatus.OK, "Список товаров"),
-            ("/catalog/", HTTPStatus.OK, "/static/images/picture.png"),
-            ("/catalog/", HTTPStatus.OK, "Название товара 1"),
-            (
-                "/catalog/",
-                HTTPStatus.OK,
-                '<nav class="navbar navbar-expand-lg"',
-            ),
+            ("/catalog/", HTTPStatus.OK,),
+            (reverse("catalog:item_list"), HTTPStatus.OK,),
         ],
     )
-    def test_status_and_content(
+    def test_status_and_rendered_file(
         self,
         url,
-        expected_status,
-        expected_content,
+        status,
     ):
         response = Client().get(url)
-        self.assertContains(
-            response,
-            expected_content,
-            status_code=expected_status,
+        self.assertEqual(
+            response.status_code,
+            status,
         )
-
-    @parameterized.expand(
-        [
-            ("/catalog/",),
-            (reverse("catalog:item_list")),
-        ],
-    )
-    def test_rendered_file(
-        self,
-        url,
-    ):
-        response = Client().get(url)
         self.assertTemplateUsed(
             response,
             "catalog/item_list.html",
         )
 
 
-class CatalogID(TestCase):
-
+class ItemDetail(TestCase):
+    fixtures = ["data.json"]
     @parameterized.expand(
         [
-            ("/catalog/0/", HTTPStatus.OK, "Пример товара"),
-            ("/catalog/0/", HTTPStatus.OK, '<div class="card-body">'),
-            (
-                reverse("catalog:item_detail", args=[0]),
-                HTTPStatus.OK,
-                '<div class="card-body">',
-            ),
+            ("/catalog/9/", HTTPStatus.OK,),
+            (reverse("catalog:item_detail", args=[10]), HTTPStatus.OK,),
         ],
     )
-    def test_status_and_content(
+    def test_status_and_rendered_file(
         self,
         url,
-        expected_status,
-        expected_content,
+        status,
     ):
         response = Client().get(url)
-        self.assertContains(
-            response,
-            expected_content,
-            status_code=expected_status,
-        )
-
-    @parameterized.expand(
-        [
-            ("/catalog/0/",),
-            (reverse("catalog:item_detail", args=[0])),
-        ],
-    )
-    def test_rendered_file(
-        self,
-        url,
-    ):
-        response = Client().get(url)
+        self.assertEqual(response.status_code, status)
         self.assertTemplateUsed(
             response,
             "catalog/item.html",
         )
 
+class Checker(TestCase):
+    def check(
+        self,
+        item,
+        exist,
+        prefetched,
+        not_loaded,
+    ):
+        item_dict = item.__dict__
+        for value in exist:
+            self.assertIn(value, item_dict)
+        for value in prefetched:
+            self.assertIn(value, item_dict['_prefetched_objects_cache'])
+        for value in not_loaded:
+            self.assertNotIn(value, item_dict)
 
-class CatalogRegularExpression(TestCase):
+class ItemMainContext(Checker):
+    fixtures = ["data.json"]
 
-    @parameterized.expand(
-        [
-            ("/catalog/re/123/", HTTPStatus.OK, "123"),
+    def test_type(self):
+        response = Client().get("/catalog/")
+        for item in response.context["items"]:
+            self.assertIsInstance(item, catalog.models.Item)
+    
+    def test_item_size(self):
+        response = Client().get("/catalog/")
+        self.assertEqual(len(response.context["items"]), 5)
+
+    def test_loaded_value(self):
+        response = Client().get("/catalog/")
+        for item in response.context["items"]:
+            self.check(
+                item,
+                (
+                    "name",
+                    "text",
+                    "category_id",
+                ),
+                ("tags",),
+                (
+                    "is_on_main",
+                    "image",
+                    "is_published",
+                )
+            )
+            
+            self.check(
+                item.tags.all()[0],
+                ("name",),
+                (),
+                ("is_published"),
+            )
+
+class ItemDetailContext(Checker):
+    fixtures = ["data.json"]
+    def test_loaded_value(self):
+        response = Client().get("/catalog/8/")
+        self.check(
+            response.context["item"],
             (
-                reverse("catalog:reqular_expression", args=[123]),
-                HTTPStatus.OK,
-                "123",
+                "name",
+                "text",
+                "category_id",
             ),
-        ],
-    )
-    def test_status_and_content(
-        self,
-        url,
-        expected_status,
-        expected_content,
-    ):
-        response = Client().get(url)
-        self.assertContains(
-            response,
-            expected_content,
-            status_code=expected_status,
+            ("tags",),
+            (
+                "is_on_main",
+                "image",
+                "is_published",
+            )
         )
 
-    @parameterized.expand(
-        [
-            ("/catalog/re/", HTTPStatus.NOT_FOUND),
-            ("/catalog/re/0/", HTTPStatus.NOT_FOUND),
-            ("/catalog/re/-11/", HTTPStatus.NOT_FOUND),
-        ],
-    )
-    def test_status(
-        self,
-        url,
-        expected_status,
-    ):
-        response = Client().get(url)
-        self.assertEqual(
-            response.status_code,
-            expected_status,
-        )
-
-
-class CatalogConverter(TestCase):
-
-    @parameterized.expand(
-        [
-            ("/catalog/converter/123/", HTTPStatus.OK, "123"),
-            (reverse("catalog:converter", args=[123]), HTTPStatus.OK, "123"),
-        ],
-    )
-    def test_status_and_content(
-        self,
-        url,
-        expected_status,
-        expected_content,
-    ):
-        response = Client().get(url)
-        self.assertContains(
-            response,
-            expected_content,
-            status_code=expected_status,
-        )
-
-    @parameterized.expand(
-        [
-            ("/catalog/converter/", HTTPStatus.NOT_FOUND),
-            ("/catalog/converter/0/", HTTPStatus.NOT_FOUND),
-            ("/catalog/converter/-11/", HTTPStatus.NOT_FOUND),
-        ],
-    )
-    def test_status(
-        self,
-        url,
-        expected_status,
-    ):
-        response = Client().get(url)
-        self.assertEqual(
-            response.status_code,
-            expected_status,
+        self.check(
+            response.context["item"].tags.all()[0],
+            ("name",),
+            (),
+            ("is_published"),
         )
