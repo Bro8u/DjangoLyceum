@@ -1,12 +1,13 @@
 from http import HTTPStatus
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render
 
 import catalog.models
+from homepage.forms import FeedbackForm
 
 
-__all__ = ["home", "coffee"]
+__all__ = ["home", "coffee", "echo", "echo_submit"]
 
 
 def home(request):
@@ -19,3 +20,20 @@ def home(request):
 
 def coffee(request):
     return HttpResponse("Я чайник", status=HTTPStatus.IM_A_TEAPOT)
+
+
+def echo(request):
+    template = "homepage/echo.html"
+    form = FeedbackForm()
+    context = {"form": form}
+    return render(request, template, context)
+
+
+def echo_submit(request):
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
+    form = FeedbackForm(request.POST or None)
+    if form.is_valid():
+        return HttpResponse(
+            form.cleaned_data["text"], content_type="text/plain"
+        )

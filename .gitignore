@@ -160,3 +160,6 @@ cython_debug/
 
 # Cached media files
 lyceum/media/cache/
+
+#Mails
+lyceum/sent_emails/

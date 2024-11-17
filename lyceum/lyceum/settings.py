@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "about.apps.AboutConfig",
     "catalog.apps.CatalogConfig",
     "homepage.apps.HomepageConfig",
+    "feedback.apps.FeedbackConfig",
     "sorl.thumbnail",
     "django_cleanup.apps.CleanupConfig",
 ]
@@ -128,3 +129,7 @@ MEDIA_URL = "/media/"
 FIXTURE_DIRS = [
     BASE_DIR / "fixtures",
 ]
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+
+EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
