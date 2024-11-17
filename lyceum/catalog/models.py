@@ -81,7 +81,7 @@ class ItemManager(django.db.models.Manager):
                     queryset=Tag.objects.only(
                         Tag.name.field.name,
                     ),
-                )
+                ),
             )
             .only(
                 Item.name.field.name,

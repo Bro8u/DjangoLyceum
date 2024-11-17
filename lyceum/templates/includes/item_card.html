@@ -3,11 +3,10 @@
     <!-- Изображение товара -->
     <a href={% url "catalog:item_detail" item.id %}>
         <img src="{{ item.main_image.image.url }}" class="card-img-top" alt="Пример товара" />
-        {% comment %} <img src="{% static 'images/picture.png' %}" class="card-img-top" alt="Пример товара" /> {% endcomment %}
     </a>
     <div class="card-body">
       <h5 class="card-title">{{item.name}}</h5>
-      <p class="card-text">{{item.text|truncatechars:10}}</p>
+      <p class="card-text">{{item.text | truncatewords_html:10 | safe}}</p>
   
       <h6 class="card-subtitle text-muted mb-2">Категория: {{item.category.name}}</h6>
       

@@ -23,7 +23,7 @@ def item_detail(request, item_id):
                 catalog.models.Image.image.field.name,
                 catalog.models.Image.item_id.field.name,
             ),
-        )
+        ),
     )
 
     item = get_object_or_404(

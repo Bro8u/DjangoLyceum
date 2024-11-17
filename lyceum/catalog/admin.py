@@ -18,10 +18,10 @@ class MainImageInline(admin.StackedInline):
     def image_tag(self, obj: catalog.models.Image):
         if obj.id and obj.image:
             return html.format_html(
-                '<img src="{}" />', obj.get_image_300x300().url
+                '<img src="{}" />',
+                obj.get_image_300x300().url,
             )
-        else:
-            return "Нет изображения"
+        return "Нет изображения"
 
     image_tag.short_description = "Предпросмотр"
 
@@ -40,8 +40,7 @@ class ImageInline(admin.TabularInline):
                 '<img src="{}" />',
                 obj.get_image_300x300().url,
             )
-        else:
-            return "Нет изображения"
+        return "Нет изображения"
 
     image_tag.short_description = "Предпросмотр"
 
