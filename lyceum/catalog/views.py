@@ -1,18 +1,16 @@
 import django.db.models
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, render
 
-import catalog.models 
+import catalog.models
 
 __all__ = ["item_list", "item_detail", "converter_and_reqular_expression"]
 
 
 def item_list(request):
     template = "catalog/item_list.html"
-    items = (
-        catalog.models.Item.objects.published()
-    )
-    context = {"items" : items}
+    items = catalog.models.Item.objects.published()
+    context = {"items": items}
     return render(request, template, context)
 
 

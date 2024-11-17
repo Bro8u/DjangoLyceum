@@ -69,7 +69,8 @@ class CoffeeUrlContentTest(TestCase):
             expected_content,
             status_code=expected_status,
         )
-        
+
+
 class Checker(TestCase):
     def check(
         self,
@@ -82,9 +83,10 @@ class Checker(TestCase):
         for value in exist:
             self.assertIn(value, item_dict)
         for value in prefetched:
-            self.assertIn(value, item_dict['_prefetched_objects_cache'])
+            self.assertIn(value, item_dict["_prefetched_objects_cache"])
         for value in not_loaded:
             self.assertNotIn(value, item_dict)
+
 
 class ItemMainContext(Checker):
     fixtures = ["data.json"]
@@ -93,7 +95,7 @@ class ItemMainContext(Checker):
         response = Client().get("/")
         for item in response.context["items"]:
             self.assertIsInstance(item, catalog.models.Item)
-    
+
     def test_item_size(self):
         response = Client().get("/")
         self.assertEqual(len(response.context["items"]), 0)
@@ -113,9 +115,9 @@ class ItemMainContext(Checker):
                     "is_on_main",
                     "image",
                     "is_published",
-                )
+                ),
             )
-            
+
             self.check(
                 item.tags.all()[0],
                 ("name",),

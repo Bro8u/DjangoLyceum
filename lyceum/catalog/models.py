@@ -48,6 +48,7 @@ class Category(CommonFieldsModel):
     def __str__(self):
         return self.name
 
+
 class ItemManager(django.db.models.Manager):
     def on_main(self):
         return (
@@ -59,9 +60,10 @@ class ItemManager(django.db.models.Manager):
                 Item.name.field.name,
             )
         )
-    
+
     def published(self):
-        return (self.get_queryset()
+        return (
+            self.get_queryset()
             .filter(
                 is_published=True,
                 category__is_published=True,
@@ -89,10 +91,10 @@ class ItemManager(django.db.models.Manager):
                 f"{Item.tags.field.name}__{Tag.name.field.name}",
             )
         )
-    
+
 
 class Item(CommonFieldsModel):
-    objects=ItemManager()
+    objects = ItemManager()
     text = models.TextField(
         validators=[catalog.validators.validate_text],
         verbose_name="Текст",
@@ -106,8 +108,6 @@ class Item(CommonFieldsModel):
     is_on_main = models.BooleanField(
         default=False,
     )
-
-    
 
     class Meta:
         verbose_name = "товар"

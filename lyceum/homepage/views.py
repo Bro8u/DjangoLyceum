@@ -1,10 +1,9 @@
 from http import HTTPStatus
 
-import django.db.models
 from django.http import HttpResponse
 from django.shortcuts import render
 
-import catalog.models 
+import catalog.models
 
 
 __all__ = ["home", "coffee"]
@@ -12,10 +11,8 @@ __all__ = ["home", "coffee"]
 
 def home(request):
     template = "homepage/home.html"
-    
-    items = (
-        catalog.models.Item.objects.on_main()
-    )
+
+    items = catalog.models.Item.objects.on_main()
     context = {"items": items}
     return render(request, template, context)
 

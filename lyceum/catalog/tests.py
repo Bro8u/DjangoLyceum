@@ -180,8 +180,14 @@ class CategoryModelTest(TestCase):
 class CatalogMain(TestCase):
     @parameterized.expand(
         [
-            ("/catalog/", HTTPStatus.OK,),
-            (reverse("catalog:item_list"), HTTPStatus.OK,),
+            (
+                "/catalog/",
+                HTTPStatus.OK,
+            ),
+            (
+                reverse("catalog:item_list"),
+                HTTPStatus.OK,
+            ),
         ],
     )
     def test_status_and_rendered_file(
@@ -202,10 +208,17 @@ class CatalogMain(TestCase):
 
 class ItemDetail(TestCase):
     fixtures = ["data.json"]
+
     @parameterized.expand(
         [
-            ("/catalog/9/", HTTPStatus.OK,),
-            (reverse("catalog:item_detail", args=[10]), HTTPStatus.OK,),
+            (
+                "/catalog/9/",
+                HTTPStatus.OK,
+            ),
+            (
+                reverse("catalog:item_detail", args=[10]),
+                HTTPStatus.OK,
+            ),
         ],
     )
     def test_status_and_rendered_file(
@@ -220,6 +233,7 @@ class ItemDetail(TestCase):
             "catalog/item.html",
         )
 
+
 class Checker(TestCase):
     def check(
         self,
@@ -232,9 +246,10 @@ class Checker(TestCase):
         for value in exist:
             self.assertIn(value, item_dict)
         for value in prefetched:
-            self.assertIn(value, item_dict['_prefetched_objects_cache'])
+            self.assertIn(value, item_dict["_prefetched_objects_cache"])
         for value in not_loaded:
             self.assertNotIn(value, item_dict)
+
 
 class ItemMainContext(Checker):
     fixtures = ["data.json"]
@@ -243,7 +258,7 @@ class ItemMainContext(Checker):
         response = Client().get("/catalog/")
         for item in response.context["items"]:
             self.assertIsInstance(item, catalog.models.Item)
-    
+
     def test_item_size(self):
         response = Client().get("/catalog/")
         self.assertEqual(len(response.context["items"]), 5)
@@ -263,9 +278,9 @@ class ItemMainContext(Checker):
                     "is_on_main",
                     "image",
                     "is_published",
-                )
+                ),
             )
-            
+
             self.check(
                 item.tags.all()[0],
                 ("name",),
@@ -273,8 +288,10 @@ class ItemMainContext(Checker):
                 ("is_published"),
             )
 
+
 class ItemDetailContext(Checker):
     fixtures = ["data.json"]
+
     def test_loaded_value(self):
         response = Client().get("/catalog/8/")
         self.check(
@@ -289,7 +306,7 @@ class ItemDetailContext(Checker):
                 "is_on_main",
                 "image",
                 "is_published",
-            )
+            ),
         )
 
         self.check(
