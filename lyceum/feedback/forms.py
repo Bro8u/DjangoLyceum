@@ -1,4 +1,5 @@
 import django.forms
+
 from feedback.models import Feedback, FeedbackAuther
 
 
@@ -17,15 +18,15 @@ class FeedbackAutherForm(BootstrapForm):
         model = FeedbackAuther
         fields = {
             FeedbackAuther.name.field.name,
-            FeedbackAuther.email.field.name,
+            FeedbackAuther.mail.field.name,
         }
         labels = {
             FeedbackAuther.name.field.name: "Имя",
-            FeedbackAuther.email.field.name: "Почта",
+            FeedbackAuther.mail.field.name: "Почта",
         }
         help_texts = {
             FeedbackAuther.name.field.name: "Имя <= 20 символов",
-            FeedbackAuther.email.field.name: "Корректная электронная почта",
+            FeedbackAuther.mail.field.name: "Корректная электронная почта",
         }
 
 

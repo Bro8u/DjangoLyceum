@@ -2,11 +2,9 @@ from http import HTTPStatus
 
 from django.test import Client, TestCase
 from django.urls import reverse
-from feedback.forms import FeedbackForm
-from feedback.models import Feedback
 from parameterized import parameterized
 
-
+from feedback.forms import FeedbackForm
 import catalog.models
 
 
@@ -150,26 +148,13 @@ class FeedbackFormTest(TestCase):
         text_help_text = FeedbackFormTest.form.fields["text"].help_text
         self.assertEqual(text_help_text, "Отзыв <= 100 символов")
 
-    def test_feedback_form_creates_model_instance(self):
-        form_data = {
-            "text": "Превосходно",
-        }
-        self.assertFalse(
-            Feedback.objects.filter(
-                text="Превосходно",
-            ).exists(),
-        )
-        initial_count = Feedback.objects.count()
+    def test_echo_redirect(self):
 
-        self.client.post(
+        form_data = {"text": "Тестовый текст"}
+
+        response = self.client.post(
             reverse("homepage:echo_submit"),
-            data=form_data,
+            form_data,
         )
 
-        self.assertEqual(Feedback.objects.count(), initial_count + 1)
-
-        self.assertTrue(
-            Feedback.objects.filter(
-                text="Превосходно",
-            ).exists(),
-        )
+        self.assertContains(response, "Тестовый текст")

@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+
 from feedback.forms import FeedbackAutherForm, FeedbackForm
 from feedback.models import Feedback, FeedbackAuther
 
@@ -36,30 +37,23 @@ class FeedbackFormTest(TestCase):
         self.assertEqual(text_help_text, "Отзыв <= 100 символов")
 
     def test_email_label(self):
-        email_label = FeedbackFormTest.auther_form.fields["email"].label
+        email_label = FeedbackFormTest.auther_form.fields["mail"].label
         self.assertEqual(email_label, "Почта")
 
     def test_email_help_text(self):
-        email_help_text = FeedbackFormTest.auther_form.fields[
-            "email"
-        ].help_text
+        email_help_text = FeedbackFormTest.auther_form.fields["mail"].help_text
         self.assertEqual(email_help_text, "Корректная электронная почта")
 
-    def test_feedback_form_creates_model_instance(self):
+    def test_feedback_auther_form_creates_model_instance(self):
         form_data = {
             "name": "Тестовый отзыв",
             "text": "Превосходно",
-            "email": "test@example.com",
+            "mail": "test@example.com",
         }
         self.assertFalse(
             FeedbackAuther.objects.filter(
                 name="Тестовый отзыв",
-                email="test@example.com",
-            ).exists(),
-        )
-        self.assertFalse(
-            Feedback.objects.filter(
-                text="Превосходно",
+                mail="test@example.com",
             ).exists(),
         )
         initial_count = Feedback.objects.count()
@@ -69,8 +63,6 @@ class FeedbackFormTest(TestCase):
             data=form_data,
         )
 
-        self.assertEqual(response.status_code, 302)
-
         self.assertRedirects(response, reverse("feedback:feedback"))
 
         self.assertEqual(Feedback.objects.count(), initial_count + 1)
@@ -78,13 +70,7 @@ class FeedbackFormTest(TestCase):
         self.assertTrue(
             FeedbackAuther.objects.filter(
                 name="Тестовый отзыв",
-                email="test@example.com",
-            ).exists(),
-        )
-
-        self.assertTrue(
-            Feedback.objects.filter(
-                text="Превосходно",
+                mail="test@example.com",
             ).exists(),
         )
 
@@ -92,14 +78,16 @@ class FeedbackFormTest(TestCase):
         form_data = {
             "name": "Неправильный отзыв",
             "text": "Ужас",
-            "email": "badtestbad.com",
+            "mail": "badtestbad.com",
         }
 
         initial_count = Feedback.objects.count()
 
-        self.client.post(
+        response = self.client.post(
             reverse("feedback:feedback"),
             data=form_data,
         )
+
+        self.assertTrue(response.context["form"].has_error("mail"))
 
         self.assertEqual(Feedback.objects.count(), initial_count)

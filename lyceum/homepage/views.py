@@ -1,10 +1,9 @@
 from http import HTTPStatus
 
-from django.http import HttpResponse, HttpResponseNotAllowed
+import django.http
 from django.shortcuts import render
-from feedback.forms import FeedbackForm
-from feedback.models import Feedback
 
+from feedback.forms import FeedbackForm
 import catalog.models
 
 
@@ -19,10 +18,13 @@ def home(request):
 
 
 def coffee(request):
-    return HttpResponse("Я чайник", status=HTTPStatus.IM_A_TEAPOT)
+    return django.http.HttpResponse("Я чайник", status=HTTPStatus.IM_A_TEAPOT)
 
 
 def echo(request):
+    if request.method == "POST":
+        return django.http.HttpResponseNotAllowed(["GET"])
+
     template = "homepage/echo.html"
     form = FeedbackForm()
     context = {"form": form}
@@ -31,14 +33,13 @@ def echo(request):
 
 def echo_submit(request):
     if request.method != "POST":
-        return HttpResponseNotAllowed([""])
+        return django.http.HttpResponseNotAllowed(["POST"])
 
     form = FeedbackForm(request.POST or None)
     if form.is_valid():
-        Feedback.objects.create(
-            **form.cleaned_data,
-        )
-        return HttpResponse(
+        return django.http.HttpResponse(
             form.cleaned_data["text"],
             content_type="text/plain; charset=utf-8",
         )
+
+    return django.http.HttpResponseBadRequest

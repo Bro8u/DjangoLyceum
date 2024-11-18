@@ -24,7 +24,7 @@ class FeedbackAuther(models.Model):
         "Имя",
         max_length=20,
     )
-    email = models.EmailField(
+    mail = models.EmailField(
         "Почта",
         max_length=100,
     )

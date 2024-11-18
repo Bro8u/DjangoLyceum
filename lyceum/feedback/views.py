@@ -2,6 +2,7 @@ import django.contrib.messages
 import django.core.mail
 import django.shortcuts
 import django.urls
+
 from feedback.forms import FeedbackAutherForm, FeedbackForm
 from feedback.models import Feedback, FeedbackAuther
 
@@ -24,7 +25,7 @@ def feedback(request):
             f"Привет {feedback_author.cleaned_data['name']}",
             f"{feedback_form.cleaned_data['text']}",
             django.conf.settings.FEEDBACK_SENDER,
-            [feedback_author.cleaned_data["email"]],
+            [feedback_author.cleaned_data["mail"]],
             fail_silently=True,
         )
         feedback_item = Feedback.objects.create(**feedback_form.cleaned_data)
