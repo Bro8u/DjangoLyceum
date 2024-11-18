@@ -23,17 +23,22 @@ def coffee(request):
 
 
 def echo(request):
-    template = "homepage/echo.html"
-    form = FeedbackForm()
-    context = {"form": form}
-    return render(request, template, context)
+    if request.method == "GET":
+        template = "homepage/echo.html"
+        form = FeedbackForm()
+        context = {"form": form}
+        return render(request, template, context)
+
+    return HttpResponseNotAllowed(["POST"])
 
 
 def echo_submit(request):
     if request.method != "POST":
         return HttpResponseNotAllowed(["POST"])
+
     form = FeedbackForm(request.POST or None)
     if form.is_valid():
         return HttpResponse(
-            form.cleaned_data["text"], content_type="text/plain"
+            form.cleaned_data["text"],
+            content_type="text/plain; charset=utf-8",
         )

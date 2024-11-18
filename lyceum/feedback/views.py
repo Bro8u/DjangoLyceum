@@ -1,8 +1,5 @@
-import os
-
 import django.contrib.messages
 from django.core.mail import send_mail
-from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from feedback.forms import FeedbackForm
@@ -13,35 +10,29 @@ __all__ = ["feedback"]
 
 
 def feedback(request):
-    if request.method == "GET":
-        print("GET")
-        template = "feedback/feedback.html"
-        form = FeedbackForm()
-        context = {
-            "form": form,
-        }
-        return render(request, template, context)
+    form = FeedbackForm(request.POST or None)
 
-    if request.method == "POST":
-        print("POST")
+    if request.method == "POST" and form.is_valid():
         template = "feedback/feedback.html"
-        form = FeedbackForm(request.POST or None)
-        if form.is_valid():
-            feedback = form.cleaned_data
-            send_mail(
-                "Обратная связь",  # Тема письма
-                feedback["text"],  # Тело письма
-                os.environ.get(
-                    "DJANGO_MAIL"
-                ),  # Отправитель (из переменной окружения)
-                [feedback["email"]],  # Получатель
-            )
-            FeedbackFormModel.objects.create(**form.cleaned_data)
-            django.contrib.messages.success(
-                request,
-                "Фидбек отправлен. Спасибо!",
-            )
-            return redirect(
-                reverse("feedback:feedback"),
-            )
-        return HttpResponseBadRequest("Данные заполнены некорректно.")
+        feedback = form.cleaned_data
+        send_mail(
+            "Отзыв",
+            feedback["text"],
+            django.conf.settings.FEEDBACK_SENDER,
+            [feedback["email"]],
+        )
+        FeedbackFormModel.objects.create(**form.cleaned_data)
+        django.contrib.messages.success(
+            request,
+            "Фидбек отправлен. Спасибо!",
+        )
+        return redirect(
+            reverse("feedback:feedback"),
+        )
+
+    template = "feedback/feedback.html"
+    form = FeedbackForm()
+    context = {
+        "form": form,
+    }
+    return render(request, template, context)

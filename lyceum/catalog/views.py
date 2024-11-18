@@ -1,4 +1,3 @@
-import django.db.models
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 
@@ -16,16 +15,9 @@ def item_list(request):
 
 def item_detail(request, item_id):
     template = "catalog/item.html"
-    queryset = catalog.models.Item.objects.published().prefetch_related(
-        django.db.models.Prefetch(
-            catalog.models.Item.images.field.related_query_name(),
-            queryset=catalog.models.Image.objects.only(
-                catalog.models.Image.image.field.name,
-                catalog.models.Image.item_id.field.name,
-            ),
-        ),
+    queryset = catalog.models.Item.objects.prefetch_images(
+        catalog.models.Item.objects.published(),
     )
-
     item = get_object_or_404(
         queryset,
         pk=item_id,

@@ -21,6 +21,7 @@ class MainImageInline(admin.StackedInline):
                 '<img src="{}" />',
                 obj.get_image_300x300().url,
             )
+
         return "Нет изображения"
 
     image_tag.short_description = "Предпросмотр"
@@ -40,6 +41,7 @@ class ImageInline(admin.TabularInline):
                 '<img src="{}" />',
                 obj.get_image_300x300().url,
             )
+
         return "Нет изображения"
 
     image_tag.short_description = "Предпросмотр"

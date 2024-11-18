@@ -12,11 +12,11 @@ class FeedbackFormModel(models.Model):
         "Отзыв",
         max_length=100,
     )
-    email = models.EmailField(
-        "Почта",
-        max_length=100,
-    )
     created_on = models.DateField(
         "время создания",
         auto_now_add=True,
+    )
+    email = models.EmailField(
+        "Почта",
+        max_length=100,
     )

@@ -61,35 +61,49 @@ class ItemManager(django.db.models.Manager):
             )
         )
 
-    def published(self):
-        return (
-            self.get_queryset()
-            .filter(
-                is_published=True,
-                category__is_published=True,
-            )
-            .order_by(
-                f"{Item.category.field.name}__{Category.name.field.name}",
-            )
-            .select_related(
-                Item.category.field.name,
-                Item.main_image.related.name,
-            )
-            .prefetch_related(
-                django.db.models.Prefetch(
-                    Item.tags.field.name,
-                    queryset=Tag.objects.only(
-                        Tag.name.field.name,
-                    ),
+    def get_published_queryset(self):
+        return self.get_queryset().filter(
+            is_published=True,
+            category__is_published=True,
+        )
+
+    def prefetch_tags(self, queryset):
+        return queryset.prefetch_related(
+            django.db.models.Prefetch(
+                Item.tags.field.name,
+                queryset=Tag.objects.only(Tag.name.field.name),
+            ),
+        )
+
+    def prefetch_images(self, queryset):
+        return queryset.prefetch_related(
+            django.db.models.Prefetch(
+                catalog.models.Item.images.field.related_query_name(),
+                queryset=catalog.models.Image.objects.only(
+                    catalog.models.Image.image.field.name,
+                    catalog.models.Image.item_id.field.name,
                 ),
-            )
-            .only(
-                Item.name.field.name,
-                Item.text.field.name,
-                Item.main_image.related.name,
-                f"{Item.category.field.name}__{Category.name.field.name}",
-                f"{Item.tags.field.name}__{Tag.name.field.name}",
-            )
+            ),
+        )
+
+    def published(self):
+        base_queryset = self.get_published_queryset()
+
+        enriched_queryset = base_queryset.select_related(
+            Item.category.field.name,
+            Item.main_image.related.name,
+        ).order_by(
+            f"{Item.category.field.name}__{Category.name.field.name}",
+        )
+
+        enriched_queryset = self.prefetch_tags(enriched_queryset)
+
+        return enriched_queryset.only(
+            Item.name.field.name,
+            Item.text.field.name,
+            Item.main_image.related.name,
+            f"{Item.category.field.name}__{Category.name.field.name}",
+            f"{Item.tags.field.name}__{Tag.name.field.name}",
         )
 
 
@@ -122,6 +136,7 @@ class Item(CommonFieldsModel):
             return django.utils.safestring.mark_safe(
                 f'<img src="{thumbnail.url}">',
             )
+
         return "Нет изображения"
 
     image_tmb.short_description = "превью"

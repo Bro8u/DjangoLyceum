@@ -48,25 +48,44 @@ class FeedbackFormTest(TestCase):
             "text": "Превосходно",
             "email": "test@example.com",
         }
-
+        self.assertFalse(
+            FeedbackFormModel.objects.filter(
+                name="Тестовый отзыв",
+            ).exists(),
+        )
         initial_count = FeedbackFormModel.objects.count()
 
         response = self.client.post(
-            reverse("feedback:feedback"), data=form_data
+            reverse("feedback:feedback"),
+            data=form_data,
         )
 
         self.assertEqual(response.status_code, 302)
 
+        self.assertRedirects(response, reverse("feedback:feedback"))
+
         self.assertEqual(FeedbackFormModel.objects.count(), initial_count + 1)
 
-        self.assertRedirects(response, reverse("feedback:feedback"))
-
         self.assertTrue(
-            len(
-                FeedbackFormModel.objects.filter(
-                    name="Тестовый отзыв",
-                )
-            )
+            FeedbackFormModel.objects.filter(
+                name="Тестовый отзыв",
+            ).exists(),
         )
 
-        self.assertRedirects(response, reverse("feedback:feedback"))
+    def test_feedback_form_fail_creates_model_instance(self):
+        form_data = {
+            "name": "Неправильный отзыв",
+            "text": "Ужас",
+            "email": "badtestbad.com",
+        }
+
+        initial_count = FeedbackFormModel.objects.count()
+
+        response = self.client.post(
+            reverse("feedback:feedback"),
+            data=form_data,
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(FeedbackFormModel.objects.count(), initial_count)

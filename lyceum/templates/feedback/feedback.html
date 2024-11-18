@@ -1,6 +1,5 @@
 <h1>Форма</h1>
 <form action="/feedback/" method="post">
-    
     {% csrf_token %}
     {% if messages %}
         <ul class="messages">
@@ -11,8 +10,11 @@
             {% endfor %}
         </ul>
     {% endif %}
-
-    {{ form.as_p }}
-
+    {%for field in form%}
+        <div>  
+            {{ field.label }} {{field}}
+            {{field.help_text}}
+        </div>
+    {%endfor%}
     <button type="submit">Отправить</button>
 </form>

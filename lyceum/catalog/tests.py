@@ -100,6 +100,7 @@ class TagModelTest(TestCase):
             )
             self.tag_duplicate.full_clean()
             self.tag_duplicate.save()
+
         self.assertEqual(
             catalog.models.Tag.objects.count(),
             tags_count,
@@ -114,6 +115,7 @@ class TagModelTest(TestCase):
             )
             self.tag2.full_clean()
             self.tag2.save()
+
         self.assertEqual(
             catalog.models.Tag.objects.count(),
             tags_count,
@@ -156,6 +158,7 @@ class CategoryModelTest(TestCase):
             )
             self.cat_duplicate.full_clean()
             self.cat_duplicate.save()
+
         self.assertEqual(
             catalog.models.Category.objects.count(),
             cats_count,
@@ -171,6 +174,7 @@ class CategoryModelTest(TestCase):
             )
             self.cat2.full_clean()
             self.cat2.save()
+
         self.assertEqual(
             catalog.models.Category.objects.count(),
             cats_count,
@@ -245,8 +249,10 @@ class Checker(TestCase):
         item_dict = item.__dict__
         for value in exist:
             self.assertIn(value, item_dict)
+
         for value in prefetched:
             self.assertIn(value, item_dict["_prefetched_objects_cache"])
+
         for value in not_loaded:
             self.assertNotIn(value, item_dict)
 

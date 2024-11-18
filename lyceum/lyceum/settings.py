@@ -20,6 +20,8 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(
     ",",
 )
 
+FEEDBACK_SENDER = os.getenv("DJANGO_MAIL", "your-email@example.com")
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
