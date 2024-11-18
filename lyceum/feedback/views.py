@@ -1,38 +1,48 @@
 import django.contrib.messages
-from django.core.mail import send_mail
-from django.shortcuts import redirect, render
-from django.urls import reverse
-from feedback.forms import FeedbackForm
-from feedback.models import FeedbackFormModel
+import django.core.mail
+import django.shortcuts
+import django.urls
+from feedback.forms import FeedbackAutherForm, FeedbackForm
+from feedback.models import Feedback, FeedbackAuther
 
 
 __all__ = ["feedback"]
 
 
 def feedback(request):
-    form = FeedbackForm(request.POST or None)
+    feedback_author = FeedbackAutherForm(request.POST or None)
+    feedback_form = FeedbackForm(request.POST or None)
+    context = {
+        "feedback_form": feedback_form,
+        "feedback_auther": feedback_author,
+    }
 
-    if request.method == "POST" and form.is_valid():
-        template = "feedback/feedback.html"
-        feedback = form.cleaned_data
-        send_mail(
-            "Отзыв",
-            feedback["text"],
+    forms = (feedback_form, feedback_author)
+
+    if request.method == "POST" and all(form.is_valid() for form in forms):
+        django.core.mail.send_mail(
+            f"Привет {feedback_author.cleaned_data['name']}",
+            f"{feedback_form.cleaned_data['text']}",
             django.conf.settings.FEEDBACK_SENDER,
-            [feedback["email"]],
+            [feedback_author.cleaned_data["email"]],
+            fail_silently=True,
         )
-        FeedbackFormModel.objects.create(**form.cleaned_data)
+        feedback_item = Feedback.objects.create(**feedback_form.cleaned_data)
+        feedback_item.save()
+        FeedbackAuther.objects.create(
+            feedback=feedback_item,
+            **feedback_author.cleaned_data,
+        )
         django.contrib.messages.success(
             request,
             "Фидбек отправлен. Спасибо!",
         )
-        return redirect(
-            reverse("feedback:feedback"),
+        return django.shortcuts.redirect(
+            django.urls.reverse("feedback:feedback"),
         )
 
-    template = "feedback/feedback.html"
-    form = FeedbackForm()
-    context = {
-        "form": form,
-    }
-    return render(request, template, context)
+    return django.shortcuts.render(
+        request,
+        "feedback/feedback.html",
+        context,
+    )

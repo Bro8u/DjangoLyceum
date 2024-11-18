@@ -1,20 +1,27 @@
-<h1>Форма</h1>
-<form action="/feedback/" method="post">
-    {% csrf_token %}
+{% extends "base.html" %}
+
+{% block content %}
     {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                    {{ message }}
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    {%for field in form%}
-        <div>  
-            {{ field.label }} {{field}}
-            {{field.help_text}}
+        <div class="text-bg-success p-3">
+            <ul class="messages">
+                {% for message in messages %}
+                    <h2 {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                        {{ message }}
+                    </h2>
+                {% endfor %}
+            </ul>
         </div>
-    {%endfor%}
-    <button type="submit">Отправить</button>
-</form>
+    {% endif %}
+    
+    <h1>Фидбек</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% with form=feedback_auther %}
+            {% include "includes/form.html" %}
+        {% endwith %}
+        {% with form=feedback_form %}
+            {% include "includes/form.html" %}
+        {% endwith %}
+        <input class="btn btn-primary" type="submit" value="Отправить">
+    </form>
+{% endblock %}

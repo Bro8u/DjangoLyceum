@@ -2,7 +2,10 @@ from http import HTTPStatus
 
 from django.test import Client, TestCase
 from django.urls import reverse
+from feedback.forms import FeedbackForm
+from feedback.models import Feedback
 from parameterized import parameterized
+
 
 import catalog.models
 
@@ -126,3 +129,47 @@ class ItemMainContext(Checker):
                 (),
                 ("is_published"),
             )
+
+
+class FeedbackFormTest(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.form = FeedbackForm()
+
+    def test_context(self):
+        response = self.client.get(reverse("homepage:echo"))
+        self.assertIn("form", response.context)
+
+    def test_text_label(self):
+        text_label = FeedbackFormTest.form.fields["text"].label
+        self.assertEqual(text_label, "Отзыв")
+
+    def test_text_help_text(self):
+        text_help_text = FeedbackFormTest.form.fields["text"].help_text
+        self.assertEqual(text_help_text, "Отзыв <= 100 символов")
+
+    def test_feedback_form_creates_model_instance(self):
+        form_data = {
+            "text": "Превосходно",
+        }
+        self.assertFalse(
+            Feedback.objects.filter(
+                text="Превосходно",
+            ).exists(),
+        )
+        initial_count = Feedback.objects.count()
+
+        self.client.post(
+            reverse("homepage:echo_submit"),
+            data=form_data,
+        )
+
+        self.assertEqual(Feedback.objects.count(), initial_count + 1)
+
+        self.assertTrue(
+            Feedback.objects.filter(
+                text="Превосходно",
+            ).exists(),
+        )

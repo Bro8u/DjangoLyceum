@@ -1,8 +1,8 @@
 import django.forms
-from feedback.models import FeedbackFormModel
+from feedback.models import Feedback, FeedbackAuther
 
 
-__all__ = ["FeedbackForm"]
+__all__ = ["FeedbackForm", "FeedbackAutherForm"]
 
 
 class BootstrapForm(django.forms.ModelForm):
@@ -12,21 +12,33 @@ class BootstrapForm(django.forms.ModelForm):
             field.field.widget.attrs["class"] = "form-control"
 
 
-class FeedbackForm(BootstrapForm):
+class FeedbackAutherForm(BootstrapForm):
     class Meta:
-        model = FeedbackFormModel
+        model = FeedbackAuther
         fields = {
-            FeedbackFormModel.name.field.name,
-            FeedbackFormModel.text.field.name,
-            FeedbackFormModel.email.field.name,
+            FeedbackAuther.name.field.name,
+            FeedbackAuther.email.field.name,
         }
         labels = {
-            FeedbackFormModel.name.field.name: "Имя",
-            FeedbackFormModel.text.field.name: "Отзыв",
-            FeedbackFormModel.email.field.name: "Почта",
+            FeedbackAuther.name.field.name: "Имя",
+            FeedbackAuther.email.field.name: "Почта",
         }
         help_texts = {
-            FeedbackFormModel.name.field.name: "Имя <= 20 символов",
-            FeedbackFormModel.text.field.name: "Отзыв <= 100 символов",
-            FeedbackFormModel.email.field.name: "Корректная электронная почта",
+            FeedbackAuther.name.field.name: "Имя <= 20 символов",
+            FeedbackAuther.email.field.name: "Корректная электронная почта",
+        }
+
+
+class FeedbackForm(BootstrapForm):
+    class Meta:
+        model = Feedback
+        exclude = (
+            Feedback.id.field.name,
+            Feedback.created_on.field.name,
+        )
+        labels = {
+            Feedback.text.field.name: "Отзыв",
+        }
+        help_texts = {
+            Feedback.text.field.name: "Отзыв <= 100 символов",
         }

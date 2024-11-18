@@ -162,4 +162,4 @@ cython_debug/
 lyceum/media/cache/
 
 #Mails
-lyceum/sent_emails/
+lyceum/send_mail/
