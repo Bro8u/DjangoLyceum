@@ -36,13 +36,13 @@ class FeedbackFormTest(TestCase):
         text_help_text = FeedbackFormTest.form.fields["text"].help_text
         self.assertEqual(text_help_text, "Отзыв <= 250 символов")
 
-    def test_email_label(self):
-        email_label = FeedbackFormTest.auther_form.fields["mail"].label
-        self.assertEqual(email_label, "Почта")
+    def test_mail_label(self):
+        mail_label = FeedbackFormTest.auther_form.fields["mail"].label
+        self.assertEqual(mail_label, "Почта")
 
-    def test_email_help_text(self):
-        email_help_text = FeedbackFormTest.auther_form.fields["mail"].help_text
-        self.assertEqual(email_help_text, "Корректная электронная почта")
+    def test_mail_help_text(self):
+        mail_help_text = FeedbackFormTest.auther_form.fields["mail"].help_text
+        self.assertEqual(mail_help_text, "Корректная электронная почта")
 
     def test_feedback_auther_form_creates_model_instance(self):
         form_data = {
