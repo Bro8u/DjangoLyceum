@@ -146,7 +146,7 @@ class FeedbackFormTest(TestCase):
 
     def test_text_help_text(self):
         text_help_text = FeedbackFormTest.form.fields["text"].help_text
-        self.assertEqual(text_help_text, "Отзыв <= 200 символов")
+        self.assertEqual(text_help_text, "Отзыв <= 250 символов")
 
     def test_echo_redirect(self):
 

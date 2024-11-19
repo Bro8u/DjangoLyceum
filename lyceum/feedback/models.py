@@ -6,9 +6,9 @@ __all__ = ["Feedback", "FeedbackAuther"]
 class Feedback(models.Model):
     text = models.CharField(
         "Отзыв",
-        max_length=100,
+        max_length=250,
     )
-    created_on = models.DateField(
+    created = models.DateField(
         "время создания",
         auto_now_add=True,
     )

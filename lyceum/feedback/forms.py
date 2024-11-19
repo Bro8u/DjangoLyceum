@@ -35,11 +35,11 @@ class FeedbackForm(BootstrapForm):
         model = Feedback
         exclude = (
             Feedback.id.field.name,
-            Feedback.created_on.field.name,
+            Feedback.created.field.name,
         )
         labels = {
             Feedback.text.field.name: "Отзыв",
         }
         help_texts = {
-            Feedback.text.field.name: "Отзыв <= 200 символов",
+            Feedback.text.field.name: "Отзыв <= 250 символов",
         }
