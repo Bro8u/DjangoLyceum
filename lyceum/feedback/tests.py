@@ -22,7 +22,7 @@ class FeedbackFormTest(TestCase):
 
     def test_name_help_text(self):
         name_help_text = FeedbackFormTest.auther_form.fields["name"].help_text
-        self.assertEqual(name_help_text, "Имя <= 20 символов")
+        self.assertEqual(name_help_text, "Имя <= 200 символов")
 
     def test_name_label(self):
         name_label = FeedbackFormTest.auther_form.fields["name"].label
@@ -34,7 +34,7 @@ class FeedbackFormTest(TestCase):
 
     def test_text_help_text(self):
         text_help_text = FeedbackFormTest.form.fields["text"].help_text
-        self.assertEqual(text_help_text, "Отзыв <= 100 символов")
+        self.assertEqual(text_help_text, "Отзыв <= 200 символов")
 
     def test_email_label(self):
         email_label = FeedbackFormTest.auther_form.fields["mail"].label
@@ -58,12 +58,10 @@ class FeedbackFormTest(TestCase):
         )
         initial_count = Feedback.objects.count()
 
-        response = self.client.post(
+        self.client.post(
             reverse("feedback:feedback"),
             data=form_data,
         )
-
-        self.assertRedirects(response, reverse("feedback:feedback"))
 
         self.assertEqual(Feedback.objects.count(), initial_count + 1)
 
@@ -73,6 +71,23 @@ class FeedbackFormTest(TestCase):
                 mail="test@example.com",
             ).exists(),
         )
+
+    def test_redirect(self):
+        form_data = {
+            "name": "Тестовый отзыв",
+            "text": "Превосходно",
+            "mail": "test@example.com",
+        }
+
+        response = self.client.post(
+            reverse("feedback:feedback"),
+            data=form_data,
+            follow=True,
+        )
+
+        self.assertRedirects(response, reverse("feedback:feedback"))
+
+        self.assertContains(response, "Фидбек отправлен. Спасибо!")
 
     def test_feedback_form_fail_creates_model_instance(self):
         form_data = {

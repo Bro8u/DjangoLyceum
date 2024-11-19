@@ -8,13 +8,6 @@ __all__ = ["CatalogItemAdmin", "ImageInline", "MainImageInline"]
 
 
 class MainImageInline(admin.StackedInline):
-    model = catalog.models.MainImage
-    fields = (
-        "image_tag",
-        "image",
-    )
-    readonly_fields = ("image_tag",)
-
     def image_tag(self, obj: catalog.models.Image):
         if obj.id and obj.image:
             return html.format_html(
@@ -25,16 +18,16 @@ class MainImageInline(admin.StackedInline):
         return "Нет изображения"
 
     image_tag.short_description = "Предпросмотр"
+
+    model = catalog.models.MainImage
+    fields = (
+        image_tag.__name__,
+        catalog.models.Image.image.field.name,
+    )
+    readonly_fields = (image_tag.__name__,)
 
 
 class ImageInline(admin.TabularInline):
-    model = catalog.models.Image
-    fields = (
-        "image_tag",
-        "image",
-    )
-    readonly_fields = ("image_tag",)
-
     def image_tag(self, obj: catalog.models.Image):
         if obj.id and obj.image:
             return html.format_html(
@@ -45,6 +38,12 @@ class ImageInline(admin.TabularInline):
         return "Нет изображения"
 
     image_tag.short_description = "Предпросмотр"
+    model = catalog.models.Image
+    fields = (
+        image_tag.__name__,
+        catalog.models.Image.image.field.name,
+    )
+    readonly_fields = (image_tag.__name__,)
 
 
 @admin.register(catalog.models.Item)

@@ -3,8 +3,9 @@ from http import HTTPStatus
 import django.http
 from django.shortcuts import render
 
-from feedback.forms import FeedbackForm
 import catalog.models
+from feedback.models import Feedback
+from feedback.forms import FeedbackForm
 
 
 __all__ = ["home", "coffee", "echo", "echo_submit"]
@@ -22,7 +23,7 @@ def coffee(request):
 
 
 def echo(request):
-    if request.method == "POST":
+    if request.method != "GET":
         return django.http.HttpResponseNotAllowed(["GET"])
 
     template = "homepage/echo.html"
@@ -37,9 +38,13 @@ def echo_submit(request):
 
     form = FeedbackForm(request.POST or None)
     if form.is_valid():
+        Feedback.objects.create(**form.cleaned_data)
         return django.http.HttpResponse(
             form.cleaned_data["text"],
             content_type="text/plain; charset=utf-8",
         )
 
-    return django.http.HttpResponseBadRequest
+    return django.http.HttpResponse(
+        "Не валидная форма",
+        content_type="text/plain; charset=utf-8",
+    )

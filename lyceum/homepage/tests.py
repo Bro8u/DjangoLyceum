@@ -4,8 +4,8 @@ from django.test import Client, TestCase
 from django.urls import reverse
 from parameterized import parameterized
 
-from feedback.forms import FeedbackForm
 import catalog.models
+from feedback.forms import FeedbackForm
 
 
 __all__ = []
@@ -146,7 +146,7 @@ class FeedbackFormTest(TestCase):
 
     def test_text_help_text(self):
         text_help_text = FeedbackFormTest.form.fields["text"].help_text
-        self.assertEqual(text_help_text, "Отзыв <= 100 символов")
+        self.assertEqual(text_help_text, "Отзыв <= 200 символов")
 
     def test_echo_redirect(self):
 
@@ -156,5 +156,5 @@ class FeedbackFormTest(TestCase):
             reverse("homepage:echo_submit"),
             form_data,
         )
-
+        self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Тестовый текст")

@@ -22,9 +22,9 @@ class FeedbackAuther(models.Model):
     )
     name = models.CharField(
         "Имя",
-        max_length=20,
+        max_length=200,
     )
     mail = models.EmailField(
         "Почта",
-        max_length=100,
+        max_length=200,
     )

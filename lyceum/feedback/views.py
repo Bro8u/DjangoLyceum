@@ -29,7 +29,6 @@ def feedback(request):
             fail_silently=True,
         )
         feedback_item = Feedback.objects.create(**feedback_form.cleaned_data)
-        feedback_item.save()
         FeedbackAuther.objects.create(
             feedback=feedback_item,
             **feedback_author.cleaned_data,
