@@ -8,7 +8,7 @@ class Feedback(models.Model):
         "Отзыв",
         max_length=250,
     )
-    created = models.DateField(
+    created_on = models.DateTimeField(
         "время создания",
         auto_now_add=True,
     )
@@ -23,8 +23,9 @@ class FeedbackAuther(models.Model):
     name = models.CharField(
         "Имя",
         max_length=200,
+        blank=True,
+        null=True,
     )
     mail = models.EmailField(
         "Почта",
-        max_length=200,
     )

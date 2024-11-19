@@ -4,8 +4,8 @@ import django.http
 from django.shortcuts import render
 
 import catalog.models
-from feedback.models import Feedback
 from feedback.forms import FeedbackForm
+from feedback.models import Feedback
 
 
 __all__ = ["home", "coffee", "echo", "echo_submit"]
