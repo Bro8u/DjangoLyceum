@@ -1,6 +1,9 @@
 <h1>Форма</h1>
 <form action="/echo/submit/" method="post">
     {% csrf_token %}
-    {{form.as_p}}
+    {{ form.text.label_tag }} {{ form.text }}
+    {% if form.text.help_text %}
+        <p class="help">{{ form.text.help_text | safe }}</p>
+    {% endif %}
     <button type="submit">Отправить</button>
 </form>

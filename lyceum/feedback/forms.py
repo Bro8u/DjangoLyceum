@@ -14,6 +14,7 @@ class BootstrapForm(django.forms.ModelForm):
 
 
 class FeedbackAutherForm(BootstrapForm):
+
     class Meta:
         model = FeedbackAuther
         fields = {
@@ -31,6 +32,17 @@ class FeedbackAutherForm(BootstrapForm):
 
 
 class FeedbackForm(BootstrapForm):
+    name = FeedbackAuther.name.field.formfield(
+        required=False,
+        label="Имя",
+        help_text="Имя <=  200 символов",
+    )
+    mail = FeedbackAuther.mail.field.formfield(
+        required=False,
+        label="Почта",
+        help_text="Корректная электронная почта",
+    )
+
     class Meta:
         model = Feedback
         exclude = (

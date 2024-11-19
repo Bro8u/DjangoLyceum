@@ -1,8 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from feedback.forms import FeedbackAutherForm, FeedbackForm
-from feedback.models import Feedback, FeedbackAuther
+from feedback.forms import FeedbackForm
+from feedback.models import Feedback
 
 
 __all__ = ["FeedbackFormTest"]
@@ -14,18 +14,17 @@ class FeedbackFormTest(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.form = FeedbackForm()
-        cls.auther_form = FeedbackAutherForm()
 
     def test_context(self):
         response = self.client.get(reverse("feedback:feedback"))
         self.assertIn("form", response.context)
 
     def test_name_help_text(self):
-        name_help_text = FeedbackFormTest.auther_form.fields["name"].help_text
+        name_help_text = FeedbackFormTest.form.fields["name"].help_text
         self.assertEqual(name_help_text, "Имя <=  200 символов")
 
     def test_name_label(self):
-        name_label = FeedbackFormTest.auther_form.fields["name"].label
+        name_label = FeedbackFormTest.form.fields["name"].label
         self.assertEqual(name_label, "Имя")
 
     def test_text_label(self):
@@ -37,11 +36,11 @@ class FeedbackFormTest(TestCase):
         self.assertEqual(text_help_text, "Отзыв <= 250 символов")
 
     def test_mail_label(self):
-        mail_label = FeedbackFormTest.auther_form.fields["mail"].label
+        mail_label = FeedbackFormTest.form.fields["mail"].label
         self.assertEqual(mail_label, "Почта")
 
     def test_mail_help_text(self):
-        mail_help_text = FeedbackFormTest.auther_form.fields["mail"].help_text
+        mail_help_text = FeedbackFormTest.form.fields["mail"].help_text
         self.assertEqual(mail_help_text, "Корректная электронная почта")
 
     def test_feedback_auther_form_creates_model_instance(self):
@@ -51,7 +50,7 @@ class FeedbackFormTest(TestCase):
             "mail": "test@example.com",
         }
         self.assertFalse(
-            FeedbackAuther.objects.filter(
+            Feedback.objects.filter(
                 name="Тестовый отзыв",
                 mail="test@example.com",
             ).exists(),
@@ -66,7 +65,7 @@ class FeedbackFormTest(TestCase):
         self.assertEqual(Feedback.objects.count(), initial_count + 1)
 
         self.assertTrue(
-            FeedbackAuther.objects.filter(
+            Feedback.objects.filter(
                 name="Тестовый отзыв",
                 mail="test@example.com",
             ).exists(),

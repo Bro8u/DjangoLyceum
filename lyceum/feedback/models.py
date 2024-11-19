@@ -12,6 +12,17 @@ class Feedback(models.Model):
         "время создания",
         auto_now_add=True,
     )
+    name = models.CharField(
+        "Имя",
+        max_length=200,
+        blank=True,
+        null=True,
+    )
+    mail = models.EmailField(
+        "Почта",
+        blank=True,
+        null=True,
+    )
 
 
 class FeedbackAuther(models.Model):
