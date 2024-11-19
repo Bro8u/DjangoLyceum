@@ -22,7 +22,7 @@ class FeedbackFormTest(TestCase):
 
     def test_name_help_text(self):
         name_help_text = FeedbackFormTest.auther_form.fields["name"].help_text
-        self.assertEqual(name_help_text, "Имя <= 200 символов")
+        self.assertEqual(name_help_text, "Имя <=  200 символов")
 
     def test_name_label(self):
         name_label = FeedbackFormTest.auther_form.fields["name"].label

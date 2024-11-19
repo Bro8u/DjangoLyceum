@@ -25,7 +25,7 @@ class FeedbackAutherForm(BootstrapForm):
             FeedbackAuther.mail.field.name: "Почта",
         }
         help_texts = {
-            FeedbackAuther.name.field.name: "Имя <= 200 символов",
+            FeedbackAuther.name.field.name: "Имя <=  200 символов",
             FeedbackAuther.mail.field.name: "Корректная электронная почта",
         }
 
