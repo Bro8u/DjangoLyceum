@@ -1,6 +1,17 @@
 stages:
+  - prepare
   - lint
   - test
+
+prepare_repo:
+  stage: prepare
+  script:
+    - echo "Cleaning up leftover lock files"
+    - rm -f /builds/django/2024/autumn/course/students/286724-betttttt-course-1187/.git/shallow.lock
+    - echo "Cleanup complete"
+  only:
+    - merge_requests
+    - main
 
 flake8_lint:
   stage: lint
@@ -35,3 +46,5 @@ django_tests:
   only:
     - merge_requests
     - main
+  needs:
+    - prepare_repo
