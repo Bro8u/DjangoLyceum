@@ -22,6 +22,8 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(
 
 FEEDBACK_SENDER = os.getenv("DJANGO_MAIL", "your-email@example.com")
 
+DEFAULT_USER_IS_ACTIVE = os.getenv("DJANGO_DEFAULT_USER_IS_ACTIVE", "False")
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -31,8 +33,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "about.apps.AboutConfig",
     "catalog.apps.CatalogConfig",
-    "homepage.apps.HomepageConfig",
     "feedback.apps.FeedbackConfig",
+    "homepage.apps.HomepageConfig",
+    "users.apps.UsersConfig",
     "sorl.thumbnail",
     "django_cleanup.apps.CleanupConfig",
 ]
@@ -54,6 +57,7 @@ if DEBUG:
     INTERNAL_IPS = [
         "127.0.0.1",
     ]
+    DEFAULT_USER_IS_ACTIVE = True
 
 ROOT_URLCONF = "lyceum.urls"
 
@@ -135,3 +139,6 @@ FIXTURE_DIRS = [
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 
 EMAIL_FILE_PATH = BASE_DIR / "send_mail"
+
+LOGIN_URL = "/users/login/"
+LOGIN_REDIRECT_URL = "/users/profile/"

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список пользователей</title>
+</head>
+<body>
+    <h1>Список активных пользователей</h1>
+    <ul>
+        {% for profile in profiles %}
+            <li>
+                <!-- Картинка -->
+                {% if profile.image %}
+                    <img src="{{ profile.image.url }}" alt="Профиль {{ profile.user.username }}" width="100">
+                {% else %}
+                    <img src="/static/default_avatar.png" alt="Нет изображения" width="100">
+                {% endif %}
+
+                <!-- Имя пользователя -->
+                <p>Имя пользователя: 
+                    {% if profile.user.first_name %}
+                        {{ profile.user.first_name }}
+                    {% else %}
+                        <span style="font-style: italic;">не указано</span>
+                    {% endif %}
+                </p>
+
+                <!-- День и месяц даты рождения -->
+                <p>Дата рождения: 
+                    {% if profile.birthday %}
+                        {{ profile.birthday|date:"d M" }}
+                    {% else %}
+                        <span style="font-style: italic;">не указано</span>
+                    {% endif %}
+                </p>
+            </li>
+        {% empty %}
+            <p>Нет активных пользователей.</p>
+        {% endfor %}
+    </ul>
+</body>
+</html>

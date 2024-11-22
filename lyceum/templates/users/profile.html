@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Мой профиль</title>
+</head>
+<body>
+    <h1>Мой профиль</h1>
+
+    {% if user_form.errors or profile_form.errors %}
+        <div class="errors">
+            <ul>
+                {% for field in user_form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+                {% for field in profile_form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Данные пользователя</legend>
+            {% for field in user_form %}
+                <div>
+                    <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small>{{ field.help_text }}</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </fieldset>
+
+        <fieldset>
+            <legend>Данные профиля</legend>
+            {% for field in profile_form %}
+                <div>
+                    <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small>{{ field.help_text }}</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </fieldset>
+
+        <button type="submit">Сохранить изменения</button>
+    </form>
+
+    <form method="post" action="{% url 'users:drink_coffee' %}">
+        {% csrf_token %}
+        <button type="submit">Выпить кофе</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{%extends "base.html"%}
+{%block content%}
+<html>
+<h1>Не авторизован</h1>
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            {{ error|escape }}
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        {{ error|escape }}
+    {% endfor %}
+{% endif %}
+
+{% csrf_token %}
+<a href='{%url "users:login"%}', type="submit">Авторизоваться</a>
+</html>
+{%endblock%} 

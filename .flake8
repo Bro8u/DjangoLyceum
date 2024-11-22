@@ -3,6 +3,6 @@ max-complexity = 7
 max-line-length = 79
 exclude = venv,.gitignore,readme.md,.env,requirements.txt, */migrations/
 import-order-style = pep8
-application-import-names = about, catalog, homepage, lyceum, core, feedback
+application-import-names = about, catalog, homepage, lyceum, core, feedback, users
 inline-quotes = double
 enable-extensions = B,B902,N
