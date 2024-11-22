@@ -53,59 +53,100 @@ class CustomUserForm(forms.ModelForm):
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["first_name"]
+        fields = [User.first_name.field.name]
         labels = {
-            "first_name": "Имя",
+            User.first_name.field.name: "Имя",
         }
         help_texts = {
-            "first_name": "Введите ваше имя.",
+            User.first_name.field.name: "Введите ваше имя.",
         }
 
 
 class ProfileForm(forms.ModelForm):
+    coffee_count = forms.IntegerField(
+        label="Количество выпитого кофе",
+        required=False,
+        disabled=True,
+        help_text="Ради кофе можно",
+    )
+
     class Meta:
         model = Profile
-        fields = ["mail", "birthday", "image"]
+        fields = [
+            Profile.mail.field.name,
+            Profile.birthday.field.name,
+            Profile.image.field.name,
+            Profile.coffee_count.field.name,
+        ]
         labels = {
-            "mail": "Почта",
-            "birthday": "День рождения",
-            "image": "Картинка",
+            Profile.mail.field.name: "Почта",
+            Profile.birthday.field.name: "День рождения",
+            Profile.image.field.name: "Картинка",
+            Profile.coffee_count.field.name: "Количество выпитого кофе",
         }
         help_texts = {
-            "mail": "Введите вашу почту.",
-            "birthday": "Выберите дату рождения.",
-            "image": "Загрузите изображение профиля.",
+            Profile.mail.field.name: "Введите вашу почту.",
+            Profile.birthday.field.name: "Выберите дату рождения.",
+            Profile.image.field.name: "Загрузите изображение профиля.",
+            Profile.coffee_count.field.name: "Ради кофе можно",
         }
 
 
 class CustomUserCreationForm(UserCreationForm):
     mail = forms.EmailField(
-        label="Эл. почта",
-        help_text="Введите ваш email.",
+        label=Profile.mail.field.verbose_name,
+        help_text=Profile.mail.field.help_text or "Введите ваш email.",
     )
 
     class Meta:
         model = User
-        fields = ["username", "mail", "password1", "password2"]
+        fields = [
+            User.username.field.name,
+            Profile.mail.field.name,
+            User.password.field.name + "1",  # password1
+            User.password.field.name + "2",  # password2
+        ]
         labels = {
-            "username": "Имя пользователя",
-            "mail": "Эл. почта",
+            User.username.field.name: User.username.field.verbose_name,
+            Profile.mail.field.name: Profile.mail.field.verbose_name,
         }
         help_texts = {
-            "username": "Придумайте имя пользователя.",
+            User.username.field.name: User.username.field.help_text,
         }
 
 
 class CustomUserChangeForm(UserChangeForm):
+    coffee_count = forms.IntegerField(
+        label=Profile.coffee_count.field.verbose_name,
+        required=False,
+        help_text=Profile.coffee_count.field.help_text
+        or "Количество чашек кофе",
+        disabled=True,
+    )
+
+    birthday = forms.DateField(
+        label=Profile.birthday.field.verbose_name,
+        required=False,
+        help_text=Profile.birthday.field.help_text
+        or "Выберите дату рождения.",
+        widget=forms.DateInput(attrs={"type": "date"}),
+    )
+
     class Meta:
-        model = User
-        fields = ["username", "email", "first_name", "last_name"]
+        model = Profile
+        fields = [
+            Profile.mail.field.name,
+            Profile.birthday.field.name,
+            Profile.coffee_count.field.name,
+        ]
         labels = {
-            "username": "Имя пользователя",
-            "email": "Эл. почта",
-            "first_name": "Имя",
-            "last_name": "Фамилия",
+            Profile.mail.field.name: "Эл. почта",
+            Profile.birthday.field.name: "День рождения",
+            Profile.coffee_count.field.name: "Количество выпитого кофе",
         }
         help_texts = {
-            "username": "Ваше имя пользователя.",
+            User.username.field.name: "Ваше имя пользователя.",
+            Profile.mail.field.name: "Ваше имя пользователя.",
+            Profile.birthday.field.name: "Ваше имя пользователя.",
+            Profile.coffee_count.field.name: "Ради кофе можно",
         }

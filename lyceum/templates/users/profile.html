@@ -69,10 +69,24 @@
     
     <form method="post" action="{% url 'homepage:coffee' %}">
         {% csrf_token %}
-        <div>
-            <text>Количество выпитых чашек: {{coffee_count}} </text>
-            <button type="submit">Выпить еще кофе</button>
-        </div>
+        <fieldset>
+            <div>
+                <label for="{{ profile_form.coffee_count.id_for_label }}">{{ profile_form.coffee_count.label }}:</label>
+                {{ profile_form.coffee_count }}
+                {% if profile_form.coffee_count.help_text %}
+                    <small>{{ profile_form.coffee_count.help_text }}</small>
+                {% endif %}
+                <button type="submit">Выпить еще кофе</button>
+            </div>
+        </fieldset>
+        {% comment %} <div>
+            <label>{{ profile_form.coffee_count.label }}:</label>
+                {{ profile_form.coffee_count }}
+                {% if profile_form.coffee_count.help_text %}
+                    <small>{{ profile_form.coffee_count.help_text }}</small>
+                {% endif %}
+            
+        </div> {% endcomment %}
         
     </form>
 </body>

@@ -2,8 +2,8 @@ from datetime import timedelta
 
 from django.test import Client, TestCase
 from django.urls import reverse
-import mock
 import django.utils.timezone
+import mock
 import pytz
 
 import users.models

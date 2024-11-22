@@ -11,7 +11,7 @@ from users.forms import CustomUserForm, ProfileForm, UserForm
 from users.models import Profile
 
 
-__all__ = ("signup",)
+__all__ = ["signup", "activate_user", "user_detail", "user_list"]
 
 
 def signup(request):
@@ -100,7 +100,6 @@ def user_profile(request):
     context = {
         "user_form": user_form,
         "profile_form": profile_form,
-        "coffee_count": request.user.profile.coffee_count,
     }
     return render(request, template, context)
 
