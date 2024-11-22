@@ -142,3 +142,4 @@ EMAIL_FILE_PATH = BASE_DIR / "send_mail"
 
 LOGIN_URL = "/users/login/"
 LOGIN_REDIRECT_URL = "/users/profile/"
+LOGOUT_REDIRECT_URL = "/homepage/"

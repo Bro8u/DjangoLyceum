@@ -1,11 +1,15 @@
+from datetime import timedelta
+
 from django.test import Client, TestCase
 from django.urls import reverse
 import mock
-from datetime import timedelta
-import pytz
 import django.utils.timezone
+import pytz
 
 import users.models
+
+
+__all__ = ["TestUserActivation"]
 
 
 class TestUserActivation(TestCase):

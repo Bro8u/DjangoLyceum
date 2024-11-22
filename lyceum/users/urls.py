@@ -5,7 +5,7 @@ import users.views
 
 app_name = "users"
 
-urlpatterns = [
+auth_urlpatterns = [
     django.urls.path(
         "login/",
         django.contrib.auth.views.LoginView.as_view(
@@ -29,7 +29,7 @@ urlpatterns = [
     ),
     django.urls.path(
         "password_change/done/",
-        django.contrib.auth.views.PasswordChangeView.as_view(
+        django.contrib.auth.views.PasswordChangeDoneView.as_view(
             template_name="users/password_change_done.html",
         ),
         name="password_change_done",
@@ -62,13 +62,16 @@ urlpatterns = [
         ),
         name="password_reset_complete",
     ),
+]
+
+users_urlpatterns = [
     django.urls.path(
         "signup/",
         users.views.signup,
         name="signup",
     ),
     django.urls.path(
-        "activate/<int:id>/",
+        "activate/<int:user_id>/",
         users.views.activate_user,
         name="activate_user",
     ),
@@ -87,14 +90,6 @@ urlpatterns = [
         users.views.user_list,
         name="user_list",
     ),
-    django.urls.path(
-        "drink_coffee/",
-        users.views.drink_coffee,
-        name="drink_coffee",
-    ),
-    django.urls.path(
-        "user_list/",
-        users.views.user_list,
-        name="user_list",
-    ),
 ]
+
+urlpatterns = users_urlpatterns + auth_urlpatterns

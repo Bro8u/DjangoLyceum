@@ -40,23 +40,40 @@
 
         <fieldset>
             <legend>Данные профиля</legend>
-            {% for field in profile_form %}
-                <div>
-                    <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
-                    {{ field }}
-                    {% if field.help_text %}
-                        <small>{{ field.help_text }}</small>
-                    {% endif %}
-                </div>
-            {% endfor %}
+            <div>
+                <label for="{{ profile_form.birthday.id_for_label }}">{{ profile_form.birthday.label }}:</label>
+                {{ profile_form.birthday }}
+                {% if profile_form.birthday.help_text %}
+                    <small>{{ profile_form.birthday.help_text }}</small>
+                {% endif %}
+            </div>
+            <!-- Вы можете также явно указать другие поля -->
+            <div>
+                <label for="{{ profile_form.mail.id_for_label }}">{{ profile_form.mail.label }}:</label>
+                {{ profile_form.mail }}
+                {% if profile_form.mail.help_text %}
+                    <small>{{ profile_form.mail.help_text }}</small>
+                {% endif %}
+            </div>
+            <div>
+                <label for="{{ profile_form.image.id_for_label }}">{{ profile_form.image.label }}:</label>
+                {{ profile_form.image }}
+                {% if profile_form.image.help_text %}
+                    <small>{{ profile_form.image.help_text }}</small>
+                {% endif %}
+            </div>
         </fieldset>
 
         <button type="submit">Сохранить изменения</button>
     </form>
-
-    <form method="post" action="{% url 'users:drink_coffee' %}">
+    
+    <form method="post" action="{% url 'homepage:coffee' %}">
         {% csrf_token %}
-        <button type="submit">Выпить кофе</button>
+        <div>
+            <text>Количество выпитых чашек: {{coffee_count}} </text>
+            <button type="submit">Выпить еще кофе</button>
+        </div>
+        
     </form>
 </body>
 </html>

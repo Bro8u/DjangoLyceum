@@ -1,7 +1,16 @@
 from django import forms
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.contrib.auth.models import User
 
 from users.models import Profile
+
+
+__all__ = [
+    "CustomUserForm",
+    "UserForm",
+    "CustomUserCreationForm",
+    "CustomUserChangeForm",
+]
 
 
 class CustomUserForm(forms.ModelForm):
@@ -66,4 +75,37 @@ class ProfileForm(forms.ModelForm):
             "mail": "Введите вашу почту.",
             "birthday": "Выберите дату рождения.",
             "image": "Загрузите изображение профиля.",
+        }
+
+
+class CustomUserCreationForm(UserCreationForm):
+    mail = forms.EmailField(
+        label="Эл. почта",
+        help_text="Введите ваш email.",
+    )
+
+    class Meta:
+        model = User
+        fields = ["username", "mail", "password1", "password2"]
+        labels = {
+            "username": "Имя пользователя",
+            "mail": "Эл. почта",
+        }
+        help_texts = {
+            "username": "Придумайте имя пользователя.",
+        }
+
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ["username", "email", "first_name", "last_name"]
+        labels = {
+            "username": "Имя пользователя",
+            "email": "Эл. почта",
+            "first_name": "Имя",
+            "last_name": "Фамилия",
+        }
+        help_texts = {
+            "username": "Ваше имя пользователя.",
         }

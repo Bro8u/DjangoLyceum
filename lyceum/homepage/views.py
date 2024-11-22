@@ -19,6 +19,11 @@ def home(request):
 
 
 def coffee(request):
+    if request.user.is_authenticated and request.user.is_active:
+        profile = request.user.profile
+        profile.coffee_count += 1
+        profile.save()
+
     return django.http.HttpResponse("Я чайник", status=HTTPStatus.IM_A_TEAPOT)
 
 

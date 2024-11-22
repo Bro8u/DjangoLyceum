@@ -1,11 +1,11 @@
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404, redirect, render
 import django.http
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 import django.urls.exceptions
 from django.utils.timezone import now, timedelta
-from django.urls import reverse
 
 from users.forms import CustomUserForm, ProfileForm, UserForm
 from users.models import Profile
@@ -20,7 +20,7 @@ def signup(request):
         if form.is_valid():
             user = User.objects.create(
                 username=form.cleaned_data["username"],
-                is_active=False,
+                is_active=django.conf.settings.DEFAULT_USER_IS_ACTIVE,
             )
             user.set_password(form.cleaned_data["password1"])
             user.save()
@@ -50,8 +50,8 @@ def signup(request):
     return render(request, template, context)
 
 
-def activate_user(request, id):
-    user = get_object_or_404(django.contrib.auth.models.User, id=id)
+def activate_user(request, user_id):
+    user = get_object_or_404(django.contrib.auth.models.User, id=user_id)
 
     if now() - user.date_joined > timedelta(hours=12):
         return django.http.HttpResponse(
@@ -100,20 +100,9 @@ def user_profile(request):
     context = {
         "user_form": user_form,
         "profile_form": profile_form,
+        "coffee_count": request.user.profile.coffee_count,
     }
     return render(request, template, context)
-
-
-@login_required
-def drink_coffee(request):
-    profile = request.user.profile
-    profile.coffe_count += 1
-    print("SEX", profile.coffe_count)
-    profile.save()
-    print("SEX", profile.coffe_count)
-    return redirect(
-        django.urls.reverse("homepage:coffee"),
-    )
 
 
 def user_list(request):
