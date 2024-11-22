@@ -19,7 +19,7 @@ class TestUserActivation(TestCase):
         client.get("/auth/profile/")
 
     @mock.patch("users.views.now")
-    @django.test.override_settings(DEFAULT_USER_ACTIVITY="False")
+    @django.test.override_settings(DEFAULT_USER_IS_ACTIVE="False")
     def test_user_activate_user_error(self, mock_now):
         django.test.Client().post(
             reverse("users:signup"),
