@@ -48,14 +48,15 @@ auth_views_with_templates = [
     ),
 ]
 
-auth_urlpatterns = [
-    path(
-        url_pat,
-        view_class.as_view(template_name=template_name),
-        name=name,
+auth_urlpatterns = []
+for url_pat, view_class, template_name, name in auth_views_with_templates:
+    auth_urlpatterns.append(
+        path(
+            url_pat,
+            view_class.as_view(template_name=template_name),
+            name=name,
+        ),
     )
-    for url_pat, view_class, template_name, name in auth_views_with_templates
-]
 
 users_urlpatterns = [
     path(

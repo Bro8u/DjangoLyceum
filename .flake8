@@ -1,5 +1,5 @@
 [flake8]
-max-complexity = 7
+max-complexity = 5
 max-line-length = 79
 exclude = venv,.gitignore,readme.md,.env,requirements.txt, */migrations/
 import-order-style = pep8

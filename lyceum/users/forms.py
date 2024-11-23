@@ -98,7 +98,7 @@ class CustomUserCreationForm(UserCreationForm):
         help_text=Profile.mail.field.help_text or "Введите ваш email.",
     )
 
-    class Meta:
+    class Meta(UserCreationForm.Meta):
         model = User
         fields = [
             User.username.field.name,
@@ -132,7 +132,7 @@ class CustomUserChangeForm(UserChangeForm):
         widget=forms.DateInput(attrs={"type": "date"}),
     )
 
-    class Meta:
+    class Meta(UserChangeForm.Meta):
         model = Profile
         fields = [
             Profile.mail.field.name,
